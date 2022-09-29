@@ -1,13 +1,11 @@
 import './App.css';
 import './Elements/Statement';
-import Statement from './Elements/Statement';
+import Structogram from './Elements/Structogram';
 
 function App() {
   return (
     <div className="App">
-      <Statement main="start">
-        s
-      </Statement>
+      <Structogram/>
     </div>
   );
 }

@@ -1,9 +1,109 @@
-.statement{
-    font-family: 'Courier New', Courier, monospace;
-    min-width: 20ch;
+@import "variables";
+.highlight-select {
+    opacity: 0.95;
+}
+.highlight-delete {
+    opacity: 0.85;
+    color: rgb(191, 102, 102);
+}
+.highlight-create {
+    background-color: aqua;
+}
+.statement {
+    box-sizing: border-box;
+    position: relative;
+    font-family: "Courier New", Courier, monospace;
+    min-width: 10ch;
     width: fit-content;
     background: coral;
     height: fit-content;
-    padding-block: .5em;
     margin-inline: auto;
+    & > .main:hover ~ .buttons,
+    .buttons:hover {
+        display: flex;
+    }
+    > .buttons {
+        display: none;
+        &::before{
+            content: " ";
+            position: absolute;
+            width: .5em;
+            height: .5em;
+            border-radius: .5em;
+            background: rgb(255, 0, 0);
+            left:-.725em;
+            top:.125em;
+        }
+        border: $border;
+        font-weight: bold;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        border-radius: 0 0.525em 0.525em 0;
+        position: absolute;
+        left: 100%;
+        min-width: 1em;
+        width: fit-content;
+        top: 0%;
+        text-align: center;
+        justify-self: center;
+        padding-block: 0.125em;
+        padding-inline: 0.725em;
+        height: fit-content;
+        padding-block: 0.175em;
+        background: rgb(184, 184, 184);
+        .action-button {
+            user-select: none;
+            cursor: pointer;
+            padding-inline: 0.525em;
+            margin-inline: 0.255em;
+            background-color: antiquewhite;
+            border-radius: 0.255em;
+            align-self: center;
+            height: 1.255em;
+            line-height: 1.255em;
+            &:hover {
+                background-color: rgb(243, 207, 164);
+            }
+        }
+    }
+    > .content {
+        display: grid;
+    }
+    &.start > .content ,&.normal > .content{
+        grid-template-columns: 1fr;
+    }
+    &.if {
+        > .main {
+            border-block-end: $border;
+            padding-inline: 3ch;
+            padding-block-start: 0.5em;
+            padding-block-end: 0.275em;
+            position: relative;
+            &::before {
+                display: block;
+                position: absolute;
+                content: " ";
+                transform: scaleY(1.48) rotate(-45deg);
+                width: 0.125em;
+                height: 100%;
+                background: rgb(0, 0, 0);
+                top: 0.5%;
+                left: 94.75%;
+            }
+            &::after {
+                display: block;
+                position: absolute;
+                content: " ";
+                transform: scaleY(1.48) rotate(45deg);
+                width: 0.125em;
+                height: 100%;
+                background: rgb(0, 0, 0);
+                top: 0.5%;
+                right: 94.75%;
+            }
+        }
+        > .content {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 }
