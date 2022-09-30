@@ -7,13 +7,21 @@ export default class Structogram extends Component {
     render() {
         return (
             <div className="structogram">
-                <Statement main="if" key={"0"}>
-                <Statement main="start" key={"0"}>
-                <Statement main="normal" key={"0"}>
-                <Statement main="normal" key={"0"}>
-                </Statement>
-                </Statement>
-                </Statement>
+                <Statement main="start" key={0} index={0}>
+                    <Statement main="if">
+                        <Statement main="normal">
+                            <Statement main="normal">
+                            <Statement main="normal">
+                            <Statement main="normal">
+                            </Statement>
+                            </Statement>
+                            </Statement>
+                        </Statement>
+                        <Statement main="normal">
+                            <Statement main="normal">
+                            </Statement>
+                        </Statement>
+                    </Statement>
                 </Statement>
             </div>
         );
