@@ -3,5 +3,6 @@
 .structogram {
     margin-inline: auto;
     width: fit-content;
-    border: $border;
+    border-inline-start: $border;
+    border-block-start: $border;
 }
