@@ -10,16 +10,8 @@ export default class Structogram extends Component {
                 <Statement main="start">
                     <Statement main="if">
                         <Statement main="normal">
-                            <Statement main="normal">
-                            <Statement main="normal">
-                            <Statement main="normal">
-                            </Statement>
-                            </Statement>
-                            </Statement>
                         </Statement>
                         <Statement main="normal">
-                            <Statement main="normal">
-                            </Statement>
                         </Statement>
                     </Statement>
                 </Statement>
