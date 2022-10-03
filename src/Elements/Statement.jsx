@@ -53,7 +53,7 @@ export default class Statement extends Component {
 
     render() {
         return (
-            <div className={`statement ${this.props.main}`} key={this.props.index}>
+            <div className={`statement ${this.props.main}`}>
                 <div className="main">
                     {this.getMainPart()}
                 </div>
