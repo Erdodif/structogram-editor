@@ -26,9 +26,8 @@ export default class Statement extends Component {
         this.setState({ button: this.getButton() });
     }
 
-    addChildren = (children = this.state.children) => {
-        if (children === undefined || children === null) return;
-        this.setState({ children: (<Statement key={this.prop.key + 1}>{children}</Statement>)});
+    addChildren = () => {
+        this.setState({ children: (<Statement>{this.state.children}</Statement>)});
     }
 
     getMainPart = () => {
@@ -43,8 +42,8 @@ export default class Statement extends Component {
     }
 
     getButton = () => {
-        let buttons = [<div className="action-button" onClick={this.clearChildren}>X</div>];
-        buttons.push(<div className="action-button" onClick={this.addChildren}>+</div>);
+        let buttons = [<div className="action-button" key="clear" onClick={this.clearChildren}>X</div>];
+        buttons.push(<div className="action-button" key="add" onClick={this.addChildren}>+</div>);
         return (
             <div className="buttons">
                 {buttons}
@@ -54,8 +53,7 @@ export default class Statement extends Component {
 
     render() {
         return (
-
-            <div className={`statement ${this.props.main}`}>
+            <div className={`statement ${this.props.main}`} key={this.props.index}>
                 <div className="main">
                     {this.getMainPart()}
                 </div>
