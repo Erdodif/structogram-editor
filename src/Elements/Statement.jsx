@@ -1,19 +1,17 @@
 import React from "react";
 import { Component } from "react";
 import "./styles/Statement.scss";
+//import json from"./structogram.json";
 
 export default class Statement extends Component {
 
     constructor(props) {
         super(props);
-        let text = null;
-        if (props.text !== undefined) {
-            text = props.children;
-        }
         this.state = {
             button: this.getButton(),
+            main: props?.main ?? "normal",
             children: props?.children,
-            text: text,
+            text: props?.text ?? null,
         }
     }
 
@@ -23,28 +21,39 @@ export default class Statement extends Component {
     }
 
     addChildren = () => {
-        console.log(this.state.children);
-        console.log(<Statement>{this.state.children}</Statement>);
-        this.setState({ children: (<Statement>{this.state.children}</Statement>)});
+        if (this.state.main === "if") {
+            switch (this.state.children?.count) {
+                case 2:
+                    return;
+                case 1:
+                    this.setState({ children: [this.state.children, <Statement key={1} />] });
+                    return;
+                default:
+                    this.setState({ children: [<Statement key={0} />, <Statement key={1} />] });
+                    return;
+            }
+        }
+        this.setState({ children: (<Statement>{this.state.children}</Statement>) });
     }
 
     getMainPart = () => {
-        switch (this.props.main) {
+        switch (this.state.main) {
             case 'start':
                 return "START";
             case 'if':
-                return "IF STATEMENT"
+                return this.state.text ?? "IF STATEMENT"
             case 'skip':
                 return "SKIP"
             default:
-                return this.state.text??"EMPTY STATEMENT";
+                return this.state.text ?? "EMPTY STATEMENT";
         }
     }
 
     getButton = () => {
         let buttons = [
             <div className="action-button" key="clear" onClick={this.clearChildren}>🗑</div>,
-            <div className="action-button" key="modify" onClick={this.modifine}>🛠</div>
+            <div className="action-button" key="modify" onClick={this.modifine}>🛠</div>,
+            <div className="action-button" key="log" onClick={() => console.log(this.ToJson())}>log</div>
         ];
         buttons.push(<div className="action-button" key="add" onClick={this.addChildren}>📎</div>);
         return (
@@ -66,5 +75,49 @@ export default class Statement extends Component {
                 {this.state.button}
             </div>
         );
+    }
+
+    static FromJson(json, key = null) {
+        if (json === undefined) {
+            return null;
+        }
+        let children;
+        if (Array.isArray(json.children) && json.children.length > 0) {
+            children = [];
+            for (let index in json?.children) {
+                children.push(this.FromJson(json.children[index], index));
+            }
+        }
+        else {
+            children = this.FromJson(json.children);
+        }
+        return <Statement main={json.main} text={json.text} key={key} >{children}</Statement>;
+    }
+
+
+    // Statement.jsx:111 Uncaught TypeError: _this.state.children.ToJson is not a function
+    ToJson = (statement = this) => {
+        let children;
+        if (this.state.children !== undefined) {
+            if (Array.isArray(this.state.children) && this.state.children.length > 0) {
+                children = [];
+                for (const child of this.state.children) {
+                    children.push(child.ToJson);
+                    if (child.className) {
+                    }
+                }
+            }
+            else {
+                children = this.state.children.ToJson();
+            }
+        }
+        else {
+            children = null;
+        }
+        return {
+            main: this.state.main,
+            text: this.state?.text,
+            children: children
+        };
     }
 }

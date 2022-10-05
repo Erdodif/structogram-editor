@@ -1,6 +1,6 @@
 import './App.css';
 import './Elements/Statement';
-import Structogram from './Elements/Structogram';
+import Structogram from './Elements/Structogram.jsx';
 
 function App() {
   return (

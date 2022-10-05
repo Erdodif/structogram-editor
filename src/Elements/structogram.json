@@ -1,0 +1,20 @@
+{
+    "main": "start",
+    "children": {
+        "main": "normal",
+        "text": "i := 1",
+        "children": {
+            "main": "if",
+            "text": "i < n",
+            "children":[
+                {
+                    "main":"normal",
+                    "text":"Ki: Igaz"
+                },
+                {
+                    "main":"skip"
+                }
+            ]
+        }
+    }
+}
