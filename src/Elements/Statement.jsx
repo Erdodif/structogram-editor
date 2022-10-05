@@ -10,13 +10,9 @@ export default class Statement extends Component {
         if (props.text !== undefined) {
             text = props.children;
         }
-        let children = null;
-        if (props.children !== undefined && props.children !== null) {
-            children = props.children
-        }
         this.state = {
             button: this.getButton(),
-            children: children,
+            children: props?.children,
             text: text,
         }
     }
@@ -27,6 +23,8 @@ export default class Statement extends Component {
     }
 
     addChildren = () => {
+        console.log(this.state.children);
+        console.log(<Statement>{this.state.children}</Statement>);
         this.setState({ children: (<Statement>{this.state.children}</Statement>)});
     }
 
@@ -36,14 +34,19 @@ export default class Statement extends Component {
                 return "START";
             case 'if':
                 return "IF STATEMENT"
+            case 'skip':
+                return "SKIP"
             default:
                 return this.state.text??"EMPTY STATEMENT";
         }
     }
 
     getButton = () => {
-        let buttons = [<div className="action-button" key="clear" onClick={this.clearChildren}>X</div>];
-        buttons.push(<div className="action-button" key="add" onClick={this.addChildren}>+</div>);
+        let buttons = [
+            <div className="action-button" key="clear" onClick={this.clearChildren}>🗑</div>,
+            <div className="action-button" key="modify" onClick={this.modifine}>🛠</div>
+        ];
+        buttons.push(<div className="action-button" key="add" onClick={this.addChildren}>📎</div>);
         return (
             <div className="buttons">
                 {buttons}
