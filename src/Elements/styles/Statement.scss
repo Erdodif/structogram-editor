@@ -1,4 +1,7 @@
+@use "sass:math";
 @import "variables";
+@import "mixins";
+
 .highlight-select {
     opacity: 0.95;
 }
@@ -14,26 +17,38 @@
     position: relative;
     font-family: "Courier New", Courier, monospace;
     min-width: 10ch;
-    width: fit-content;
+    width: 100%;
     background: coral;
     height: fit-content;
     margin-inline: auto;
+    & .main{
+        padding-block-start: 0.475em;
+        padding-block-end: 0.275em;
+        min-height: 1em;
+    }
     & > .main:hover ~ .buttons,
     .buttons:hover {
         display: flex;
     }
     > .buttons {
-        z-index: 9999 !important;
+        z-index: 10 !important;
         display: none;
         &::before {
-            content: " ";
-            position: absolute;
-            width: 0.5em;
-            height: 0.5em;
+            @include render_pseudo;
+            width: .5em;
+            height: 0.475em;
             border-radius: 0.5em;
             background: rgb(255, 0, 0);
             left: -0.725em;
             top: 0.125em;
+        }
+        &::after{
+            z-index: 11 !important;
+            background-image: $icon_arrow_up;
+            @include icon_background(.775em);
+            @include render_pseudo;
+            height: .775em;
+            width: .775em;
         }
         border: $border;
         font-weight: bold;
@@ -44,13 +59,15 @@
         left: 100%;
         min-width: 1em;
         width: fit-content;
+        box-sizing: border-box;
+        height: calc(2em + $border_width);
         top: 0%;
+        margin-block-start: -$border_width;
+        margin-inline-start: -$border_width;
         text-align: center;
         justify-self: center;
-        padding-block: 0.125em;
+        padding-block: 0.275em;
         padding-inline: 0.725em;
-        height: fit-content;
-        padding-block: 0.175em;
         background: rgb(184, 184, 184);
         .action-button {
             user-select: none;
@@ -71,7 +88,8 @@
         display: grid;
     }
     &.start,
-    &.normal {
+    &.normal,
+    &.skip {
         .main {
             border-block-end: $border;
             border-inline-end: $border;
@@ -85,34 +103,43 @@
         > .main {
             border-block-end: $border;
             border-inline-end: $border;
-            padding-inline: 3ch;
-            padding-block-start: 0.5em;
-            padding-block-end: 0.275em;
+            padding-inline: 3.2ch;
             position: relative;
             &::before {
+                @include render_pseudo;
+                content: "I";
+                @include icon_background(calc(100% - $border_width * 3));
+                padding-block-start: .925em;
+                text-align: right;
+                padding-inline-end: .5ch;
                 display: block;
-                position: absolute;
-                content: " ";
-                transform: scaleY(1.48) rotate(-45deg);
-                width: 0.125em;
-                height: 100%;
-                background: rgb(0, 0, 0);
-                top: 0.5%;
-                left: 94.75%;
+                background-image: $icon_diagonal_line;
+                height: calc(100% + $border_width);
+                width: 3.5ch;
+                transform: scaleX(-1);
+                top: math.div(-$border_width, 2);
+                left: 0%;
             }
             &::after {
+                @include render_pseudo;
+                content: "H";
+                @include icon_background(calc(100% - $border_width * 3));
                 display: block;
-                position: absolute;
-                content: " ";
-                transform: scaleY(1.48) rotate(45deg);
-                width: 0.125em;
-                height: 100%;
-                background: rgb(0, 0, 0);
-                top: 0.5%;
-                right: 94.75%;
+                background-image: $icon_diagonal_line;
+                height: calc(100% + $border_width);
+                width: 3.5ch;
+                padding-block-start: .925em;
+                text-align: right;
+                padding-inline-end: .5ch;
+                top: math.div(-$border_width, 2);
+                right: 0%;
             }
         }
         > .content {
+            /* MODE: COMPACT-CHILDREN
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;*/
             grid-template-columns: 1fr 1fr;
         }
     }

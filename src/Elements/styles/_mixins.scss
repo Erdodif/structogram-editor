@@ -1,0 +1,10 @@
+@mixin icon_background($width, $height:$width){
+    background-repeat: no-repeat;
+    background-size: $width;
+    background-origin: padding-box;
+}
+
+@mixin render_pseudo{
+    content:" ";
+    position: absolute;
+}

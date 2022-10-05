@@ -1,1 +1,4 @@
-$border: 0.125em solid black;
+$border_width: 0.125em;
+$border: $border_width solid black;
+$icon_arrow_up: url("/icons/arrow_up_icon.svg");
+$icon_diagonal_line: url("/icons/diagonal_line.svg");
