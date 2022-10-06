@@ -97,6 +97,9 @@ export default class Statement extends Component {
 
     // Statement.jsx:111 Uncaught TypeError: _this.state.children.ToJson is not a function
     ToJson = (statement = this) => {
+        return {main:this.state.main, text:this.state.text, children:[]}
+        //
+        /*
         let children;
         if (this.state.children !== undefined) {
             if (Array.isArray(this.state.children) && this.state.children.length > 0) {
@@ -119,5 +122,6 @@ export default class Statement extends Component {
             text: this.state?.text,
             children: children
         };
+        */
     }
 }
