@@ -11,8 +11,12 @@ export default class Statement extends Component {
             button: this.getButton(),
             main: props?.main ?? "normal",
             children: props?.children,
-            text: props?.text ?? null,
+            text: props?.text ?? null
         }
+    }
+
+    componentDidMount(){
+        this.setState({json: this.ToJson()});
     }
 
     clearChildren = () => {
@@ -42,6 +46,12 @@ export default class Statement extends Component {
                 return "START";
             case 'if':
                 return this.state.text ?? "IF STATEMENT"
+            case 'switch':
+                return this.state.text ?? "SWITCH STATEMENT"
+            case 'loop':
+                return this.state.text ?? "WHILE LOOP";
+            case 'loop-reverse':
+                return this.state.text ?? "DO-WHILE LOOP";
             case 'skip':
                 return "SKIP"
             default:
@@ -77,7 +87,7 @@ export default class Statement extends Component {
         );
     }
 
-    static FromJson(json, key = null) {
+    static FromJson(json, key = 0) {
         if (json === undefined) {
             return null;
         }
@@ -89,15 +99,35 @@ export default class Statement extends Component {
             }
         }
         else {
-            children = this.FromJson(json.children);
+            children = this.FromJson(json.children, 0);
         }
-        return <Statement main={json.main} text={json.text} key={key} >{children}</Statement>;
+        return <Statement main={json.main} text={json.text} key={key}>{children}</Statement>;
     }
 
+    ArrayToJson = (statements) => {
+    }
 
     // Statement.jsx:111 Uncaught TypeError: _this.state.children.ToJson is not a function
-    ToJson = (statement = this) => {
-        return {main:this.state.main, text:this.state.text, children:[]}
+    ToJson = () => {
+        return { 
+            main: this.state.main, 
+            text: this.state.text, 
+            children: {} //this.state.children.state.json 
+        }
+        /*let childrenJson;
+        childrenJson = [];
+        if (this.state?.children !== undefined && this.state?.children !== null) {
+            if (Array.isArray(this.state.children)) {
+                for (const child of this.state.children) {
+                    childrenJson.push(child.ToJson());
+                }
+            }
+            else {
+                console.log(this.state.children);
+                childrenJson = this.state.children[0].ToJson();
+            }
+        }
+        return { main: this.state.main, text: this.state.text, children: childrenJson }*/
         //
         /*
         let children;

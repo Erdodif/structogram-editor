@@ -4,15 +4,44 @@
         "main": "normal",
         "text": "i := 1",
         "children": {
-            "main": "if",
-            "text": "i < n",
-            "children":[
+            "main": "loop",
+            "text": "i < 1",
+            "children": [
                 {
-                    "main":"normal",
-                    "text":"Ki: Igaz"
+                    "main": "normal"
                 },
                 {
-                    "main":"skip"
+                    "main": "normal",
+                    "text": "Nem ciklikus",
+                    "children": [
+                        {
+                            "main": "loop-reverse",
+                            "text": "i < 2",
+                            "children": [
+                                {
+                                    "main":"skip"
+                                }
+                                ,
+                                {
+                                    "main": "normal",
+                                    "text": "#mittomén",
+                                    "children": {
+                                        "main": "if",
+                                        "text": "i < n",
+                                        "children": [
+                                            {
+                                                "main": "normal",
+                                                "text": "Ki: Igaz"
+                                            },
+                                            {
+                                                "main": "skip"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

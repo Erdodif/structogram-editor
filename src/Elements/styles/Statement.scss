@@ -23,6 +23,7 @@
     height: fit-content;
     margin-inline: auto;
     & .main{
+        position: relative;
         padding-block-start: 0.475em;
         padding-block-end: 0.275em;
         min-height: 1em;
@@ -105,6 +106,8 @@
         }
     }
     &.if {
+        position: relative;
+        display: grid;
         > .main {
             border-block-end: $border;
             border-inline-end: $border;
@@ -122,7 +125,51 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;*/
+
+            //TODO, nem jó
             grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-template-areas: true false
+                otherwise;
+            :last-child{
+                grid-area: "otherwise";
+            }
+        }
+    }
+    &.loop, &.loop-reverse{
+        .main{
+            border-block-end:0;
+        }
+        .content{
+            display: flex;
+            flex-direction: column;
+            >*{
+                border-block-start: $border;
+                border-block-end: unset;
+            }
+            > :not(:last-child){
+                margin-inline-start: 2em;
+                width: fit-content;
+                min-width: calc(100% - 2em);
+                border-inline-start: $border;
+            }
+            > :last-child{
+                background-color: cadetblue;
+            }
+        }
+    }
+    &.loop-reverse{
+        display: flex;
+        flex-direction: column-reverse;
+        .content{
+            >*{
+                border-block-start: $border;
+                border-block-end: unset;
+            }
+            > :last-child{
+                border-block-end: 0;
+            }
+
         }
     }
 }

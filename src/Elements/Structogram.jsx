@@ -8,7 +8,7 @@ export default class Structogram extends Component {
     render() {
         return (
             <div className="structogram">
-                {Statement.FromJson(json)}
+                {Statement.FromJson(json,0)}
             </div>
         );
     }
