@@ -7,18 +7,19 @@
 }
 .highlight-delete {
     opacity: 0.85;
-    color: rgb(191, 102, 102);
+    color: $color_statement_bg;
 }
 .highlight-create {
     background-color: aqua;
 }
 .statement {
+    color: $color_statement_text;
     box-sizing: border-box;
     position: relative;
     font-family: "Courier New", Courier, monospace;
     min-width: 10ch;
     width: 100%;
-    background: coral;
+    background: $color_statement_bg;
     height: fit-content;
     margin-inline: auto;
     & .main{
@@ -71,19 +72,20 @@
         justify-self: center;
         padding-block: 0.275em;
         padding-inline: 0.725em;
-        background: rgb(184, 184, 184);
+        background: $color_s_btn_holder_bg;
         .action-button {
+            color: $color_s_button_text;
             user-select: none;
             cursor: pointer;
             padding-inline: 0.525em;
             margin-inline: 0.255em;
-            background-color: antiquewhite;
+            background-color: $color_s_button_bg;
             border-radius: 0.255em;
             align-self: center;
             height: 1.255em;
             line-height: 1.255em;
             &:hover {
-                background-color: rgb(243, 207, 164);
+                background-color: $color_s_button_bg_hover;
             }
         }
     }
@@ -122,8 +124,5 @@
             flex-wrap: nowrap;*/
             grid-template-columns: 1fr 1fr;
         }
-    }
-    &:last-child{
-        background: aquamarine;
     }
 }

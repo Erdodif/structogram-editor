@@ -1,4 +1,41 @@
 $border_width: 0.125em;
-$border: $border_width solid black;
+$border: $border_width solid var(--color-statement-border);
 $icon_arrow_up: url("/icons/arrow_up_icon.svg");
 $icon_diagonal_line: url("/icons/diagonal_line.svg");
+
+:root{
+    --color-page-bg: rgb(48, 25, 60);
+    --color-statement-bg: rgb(39, 89, 105);
+    --color-statement-border: rgb(0, 0, 0);
+    --color-statement-text: white ;
+    --color-statement-bg-highlight: rgb(191, 102, 102);
+    --color-s-button-bg: rgb(245, 178, 90);
+    --color-s-button-bg-hover: rgb(243, 207, 164);
+    --color-s-button-text: black;
+    --color-s-btn-holder-bg:rgb(25, 25, 25);
+}
+
+//TODO, az elágazás indikátor nem vált színt, mert az SVG csak háttérképként és nem DOM-elemként van jelen
+
+@mixin theme-monochrome {
+    --color-page-bg: white;
+    --color-statement-bg: white;
+    --color-statement-border: black;
+    --color-statement-text: black ;
+    --color-statement-bg-highlight: rgb(191, 102, 102);
+    --color-s-button-bg: antiquewhite;
+    --color-s-button-bg-hover: rgb(243, 207, 164);
+    --color-s-button-text: black;
+    --color-s-btn-holder-bg:rgb(184, 184, 184);
+}
+
+$color_statement_bg : var(--color-statement-bg);
+$color_statement_text : var(--color-statement-text);
+$color_page_bg : var(--color-page-bg);
+
+$color_statement_border : var(--color-statement-border);
+$color_statement_bg_highlight : var(--color-statement-bg-highlight);
+$color_s_button_bg : var(--color-s-button-bg);
+$color_s_button_bg_hover : var(--color-s-button-bg-hover);
+$color_s_button_text : var(--color-s-button-text);
+$color_s_btn_holder_bg : var(--color-s-btn-holder-bg);
