@@ -1,49 +1,41 @@
 {
-    "main": "start",
-    "children": {
-        "main": "normal",
-        "text": "i := 1",
-        "children": {
-            "main": "loop",
-            "text": "i < 1",
-            "children": [
-                {
-                    "main": "normal"
-                },
-                {
-                    "main": "normal",
-                    "text": "Nem ciklikus",
-                    "children": [
-                        {
-                            "main": "loop-reverse",
-                            "text": "i < 2",
-                            "children": [
-                                {
-                                    "main":"skip"
-                                }
-                                ,
-                                {
-                                    "main": "normal",
-                                    "text": "#mittomén",
-                                    "children": {
-                                        "main": "if",
-                                        "text": "i < n",
-                                        "children": [
-                                            {
-                                                "main": "normal",
-                                                "text": "Ki: Igaz"
-                                            },
-                                            {
-                                                "main": "skip"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
+    "main":"start",
+    "children":{
+        "main":"if",
+        "text":"i<n",
+        "children":[
+            {
+                "main":"skip"
+            },
+            {
+                "main":"normal",
+                "text":"Ki: i"
+            },
+            {
+                "main":"switch",
+                "children":[
+                    {
+                        "main":"switch-if",
+                        "text":"A"
+                    },
+                    {
+                        "main":"switch-if",
+                        "text":"B"
+                    },
+                    {
+                        "main":"switch-if",
+                        "text":"C"
+                    },
+                    {
+                        "main":"switch-if",
+                        "text":"D"
+                    },
+                    {
+                        "main":"normal",
+                        "text":"Ki: i"
+                    }
+                ]
+            }
+        ]
     }
 }
