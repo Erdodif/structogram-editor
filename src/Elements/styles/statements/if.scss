@@ -58,21 +58,21 @@
 }
 
 @mixin statement_switch{
-    > .main{
+    &> .main{
         display: none;
     }
-    > .content{
+    &> .content{
         display: grid;
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr;
         grid-auto-columns: 1fr;
         grid-auto-flow:column;
         //TODO place every element in the first row in order, except the last child, which will be actually the statement after it(and also below it)
-        > {
-            > .switch-if >.main::before{
+        &> {
+            &> .switch-if >.main::before{
                 @include if_indicator_true;
             }
-            > .switch-else >.main::before{
+            &> .switch-else >.main::before{
                 @include if_indicator_true;
             }
             grid-row-start: 1;
