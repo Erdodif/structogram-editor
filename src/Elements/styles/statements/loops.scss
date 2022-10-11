@@ -1,0 +1,40 @@
+@import "../_variables.scss";
+
+@mixin statement_loop{
+    .main{
+        border-block-end:0;
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        >*{
+            border-block-start: $border;
+            border-block-end: unset;
+        }
+        > :not(:last-child){
+            margin-inline-start: 2em;
+            width: fit-content;
+            min-width: calc(100% - 2em);
+            border-inline-start: $border;
+        }
+        > :last-child{
+            background-color: cadetblue;
+        }
+    }
+}
+
+@mixin statement_loop_reverse{
+    @include statement_loop;
+    display: flex;
+    flex-direction: column-reverse;
+    .content{
+        >*{
+            border-block-start: $border;
+            border-block-end: unset;
+        }
+        > :last-child{
+            border-block-end: 0;
+        }
+
+    }
+}

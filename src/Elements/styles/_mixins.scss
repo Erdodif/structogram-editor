@@ -9,35 +9,11 @@
     position: absolute;
 }
 
-@mixin if_indicator_false($content: " ") {
-    @include render_pseudo($content);
-    @include icon_background(calc(100% - $border_width * 3 + .075em));
-    background-image: $icon_diagonal_line;
-    top: math.div(-$border_width, 2);
-    height: calc(100% + $border_width);
-    margin-block-start: -.025em;
-    padding-block-start: 0.925em;
-    padding-inline-end: 0.5ch;
-    display: block;
-    width: 3.5ch;
-    text-align: right;
-    right: 0%;
-    left: unset;
-}
-
-
 svg.image-indicator-stroke{
     path{
         stroke:$color_statement_border;
         stroke-width:1.5 ;
     }
-}
-
-@mixin if_indicator_true($content: " ") {
-    @include if_indicator_false($content);
-    transform: scaleX(-1);
-    left: 0%;
-    right: unset;
 }
 
 @mixin background_mask($bg, $img, $width: 100%, $height: 100%) {

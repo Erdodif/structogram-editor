@@ -1,0 +1,77 @@
+@import "../mixins";
+@import "../variables";
+
+@mixin button_drawer{
+    z-index: 10 !important;
+    display: none;
+    border: $border;
+    font-weight: bold;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-radius: 0 0.525em 0.525em 0;
+    position: absolute;
+    left: 100%;
+    min-width: 1em;
+    width: fit-content;
+    box-sizing: border-box;
+    height: calc(2em + $border_width);
+    top: 0%;
+    margin-block-start: -$border_width;
+    margin-inline-start: -$border_width;
+    text-align: center;
+    justify-self: center;
+    padding-block: 0.275em;
+    padding-inline: 0.725em;
+    background: $color_s_btn_holder_bg;
+    .action-button {
+        @include button_drawer_button;
+    }
+    &::before {
+        @include button_drawer_position_indicator;
+    }
+    &::after{
+        @include button_drawer_icon;
+    }
+}
+
+@mixin button_drawer_button{
+    color: $color_s_button_text;
+    user-select: none;
+    cursor: pointer;
+    padding-inline: 0.525em;
+    margin-inline: 0.255em;
+    background-color: $color_s_button_bg;
+    border-radius: 0.255em;
+    align-self: center;
+    height: 1.255em;
+    line-height: 1.255em;
+    &:hover {
+        background-color: $color_s_button_bg_hover;
+    }
+}
+
+@mixin button_drawer_icon{
+    @include render_pseudo;
+    @include icon_background(.775em);
+    z-index: 11 !important;
+    background-image: $icon_arrow_up;
+    height: .775em;
+    width: .775em;
+    margin-inline-start: -.675em;
+    margin-block-start: .265em;
+    transform: rotate(-90deg);
+}
+
+@mixin button_drawer_position_indicator{
+    @include render_pseudo;
+    width: .5em;
+    height: 0.475em;
+    border-radius: 0.5em;
+    background: rgb(255, 0, 0);
+    //left: -98.6%;
+    left: -1.125em;
+    //top: 33.5%;
+    top: .125em;
+    opacity: .7;
+
+}
