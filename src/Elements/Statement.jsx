@@ -15,8 +15,8 @@ export default class Statement extends Component {
         }
     }
 
-    componentDidMount(){
-        this.setState({json: this.ToJson()});
+    componentDidMount() {
+        this.setState({ json: this.ToJson() });
     }
 
     clearChildren = () => {
@@ -73,16 +73,37 @@ export default class Statement extends Component {
         );
     }
 
+    ensureStartingElements() {
+        //TODO, 
+        //ifs and switches needs to have at least 3 children
+        //loops should have 2 at least
+    }
+
     render() {
+        let children = [];
+        let onlyChild;
+        if (Array.isArray(this.state.children)) {
+            for (const child of this.state.children) {
+                children.push(child);
+            }
+            onlyChild = children[children.length - 1]
+            children.pop();
+        }
+        else {
+            onlyChild = this.state.children;
+        }
         return (
             <div className={`statement ${this.props.main}`}>
                 <div className="main">
                     {this.getMainPart()}
+                    {this.state.button}
+                </div>
+                <div className="sub-content">
+                    {children}
                 </div>
                 <div className="content">
-                    {this.state.children}
+                    {onlyChild}
                 </div>
-                {this.state.button}
             </div>
         );
     }
@@ -104,54 +125,13 @@ export default class Statement extends Component {
         return <Statement main={json.main} text={json.text} key={key}>{children}</Statement>;
     }
 
-    ArrayToJson = (statements) => {
-    }
-
-    // Statement.jsx:111 Uncaught TypeError: _this.state.children.ToJson is not a function
     ToJson = () => {
-        return { 
-            main: this.state.main, 
-            text: this.state.text, 
-            children: {} //this.state.children.state.json 
-        }
-        /*let childrenJson;
-        childrenJson = [];
-        if (this.state?.children !== undefined && this.state?.children !== null) {
-            if (Array.isArray(this.state.children)) {
-                for (const child of this.state.children) {
-                    childrenJson.push(child.ToJson());
-                }
-            }
-            else {
-                console.log(this.state.children);
-                childrenJson = this.state.children[0].ToJson();
-            }
-        }
-        return { main: this.state.main, text: this.state.text, children: childrenJson }*/
-        //
-        /*
-        let children;
-        if (this.state.children !== undefined) {
-            if (Array.isArray(this.state.children) && this.state.children.length > 0) {
-                children = [];
-                for (const child of this.state.children) {
-                    children.push(child.ToJson);
-                    if (child.className) {
-                    }
-                }
-            }
-            else {
-                children = this.state.children.ToJson();
-            }
-        }
-        else {
-            children = null;
-        }
         return {
             main: this.state.main,
-            text: this.state?.text,
-            children: children
-        };
-        */
+            text: this.state.text,
+            children: {
+                //TODO
+            }
+        }
     }
 }
