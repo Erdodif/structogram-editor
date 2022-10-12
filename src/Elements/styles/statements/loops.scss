@@ -1,40 +1,53 @@
 @import "../_variables.scss";
 
 @mixin statement_loop{
-    .main{
+    display: grid;
+    grid-template-columns: 1.575em 1fr;
+    grid-template-rows: fit-content fit-content fit-content;
+    grid-template-areas: 'head head' 'empty body' 'else else';
+    &>.main{
+        grid-area: head;
         border-block-end:0;
     }
-    .content{
-        display: flex;
+    &>.sub-content{
+        grid-area: body;
+        display: grid;
+        grid-template-columns: 1fr;
         flex-direction: column;
-        >*{
-            border-block-start: $border;
-            border-block-end: unset;
+        border-collapse: collapse;
+        &>.statement{
+            width: 100%;
+            border-inline:$border;
+            box-sizing: border-box;
+            border-block-end: $border;
+            &>.main{
+                min-width: calc(100% - 2em);
+                border-inline:0;
+                border-block-end:0;
+            }
+            &:first-child{
+                border-block-start: $border;
+            }
+            &:last-child{
+                border-block-end: 0;
+            }
         }
-        > :not(:last-child){
-            margin-inline-start: 2em;
-            width: fit-content;
-            min-width: calc(100% - 2em);
-            border-inline-start: $border;
-        }
-        > :last-child{
-            background-color: cadetblue;
-        }
+    }
+    &>.content{
+        grid-area: else;
+        border-block-start: $border;
     }
 }
 
 @mixin statement_loop_reverse{
     @include statement_loop;
-    display: flex;
-    flex-direction: column-reverse;
-    .content{
-        >*{
-            border-block-start: $border;
-            border-block-end: unset;
+    grid-template-areas: 'gap body' 'head head' 'else else';
+    &>.sub-content>.statement{
+        &:first-child{
+            border-block-start: 0;
         }
-        > :last-child{
-            border-block-end: 0;
+        &:last-child{
+            border-block-end: $border;
         }
-
     }
 }

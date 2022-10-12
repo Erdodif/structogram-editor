@@ -31,15 +31,12 @@
         padding-block-end: 0.275em;
         min-height: 1em;
     }
-    & > .main:hover ~ .buttons,
+    & > .main:hover > .buttons,
     .buttons:hover {
         display: flex;
     }
-    > .buttons {
+    &>.main > .buttons {
         @include button_drawer;
-    }
-    > .content {
-        display: grid;
     }
     &.start,
     &.normal,
