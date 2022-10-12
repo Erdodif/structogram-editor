@@ -27,7 +27,7 @@
 @mixin statement_if {
     position: relative;
     display: grid;
-    > .main {
+    &> .main {
         border-block-end: $border;
         border-inline-end: $border;
         padding-inline: 3.2ch;
@@ -39,15 +39,18 @@
             @include if_indicator_false("H");
         }
     }
-    > .sub-content {
+    &> .sub-content {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, max-content);
         grid-template-rows: 1fr;
-        grid-template-areas: "true      false";
-        > :first-child {
+        grid-template-areas: 'true false';
+        justify-items: stretch;
+        align-items: stretch;
+        //TODO Stretch Items
+        &>.if-true {
             grid-area: true;
         }
-        > :nth-child(2) {
+        &>.if-false {
             grid-area: false;
         }
     }
@@ -61,7 +64,10 @@
         display: flex;
         flex-direction: row;
         flex-wrap: no-wrap;
-        //TODO place every element in the first row in order, except the last child, which will be actually the statement after it(and also below it)
+        align-items: stretch;
+        &>.statement>.content>.statement{
+            margin-block:auto;
+        }
         & > .switch-if > .main::before {
             @include if_indicator_true;
         }

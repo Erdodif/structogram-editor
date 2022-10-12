@@ -10,7 +10,7 @@
     flex-wrap: nowrap;
     border-radius: 0 0.525em 0.525em 0;
     position: absolute;
-    left: 100%;
+    left: calc(100% + $border_width);
     min-width: 1em;
     width: fit-content;
     box-sizing: border-box;

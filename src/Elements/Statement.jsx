@@ -54,6 +54,8 @@ export default class Statement extends Component {
                 return this.state.text ?? "DO-WHILE LOOP";
             case 'skip':
                 return "SKIP"
+            case 'empty':
+                return "-"
             default:
                 return this.state.text ?? "EMPTY STATEMENT";
         }
@@ -80,32 +82,57 @@ export default class Statement extends Component {
     }
 
     render() {
-        let children = [];
-        let onlyChild;
-        if (Array.isArray(this.state.children)) {
-            for (const child of this.state.children) {
-                children.push(child);
-            }
-            onlyChild = children[children.length - 1]
-            children.pop();
-        }
-        else {
-            onlyChild = this.state.children;
-        }
         return (
-            <div className={`statement ${this.props.main}`}>
+            <div className={`statement ${this.props.main} ${this.props.extra}`}>
                 <div className="main">
                     {this.getMainPart()}
                     {this.state.button}
                 </div>
                 <div className="sub-content">
-                    {children}
+                    {this.getContent().subContent}
                 </div>
                 <div className="content">
-                    {onlyChild}
+                    {this.getContent().onlyChild}
                 </div>
             </div>
         );
+    }
+
+    getContent = () => {
+        let out = {children:null,onlyChild:null}
+        if (Array.isArray(this.state.children)) {
+            out.children = [];
+            let length = this.state.children.length;
+            if (this.state.main === "if"){
+                switch (length){
+                    case 0:
+                        return {
+                            children: [<Statement main="empty" key={0}/>,<Statement main="empty" key={-1}/>],
+                            onlyChild: out.onlyChild
+                        }
+                    case 1:
+                        out.children = this.state.children;
+                        out.children.push(<Statement main="empty" key="-1"/>);
+                        return { subContent: this.state.children, onlyChild: out.onlyChild };
+                    case 2:
+                        return { subContent: this.state.children, onlyChild: out.onlyChild };
+                    default:
+                }
+            }
+            if (this.state.main === "switch" && length < 3) {
+                return { subContent: this.state.children, onlyChild: out.onlyChild }
+
+            }
+            for (const child of this.state.children) {
+                out.children.push(child);
+            }
+            out.onlyChild = out.children[out.children.length - 1]
+            out.children.pop();
+        }
+        else {
+            out.onlyChild = this.state.children;
+        }
+        return { subContent: out.children, onlyChild: out.onlyChild }
     }
 
     static FromJson(json, key = 0) {
@@ -122,7 +149,7 @@ export default class Statement extends Component {
         else {
             children = this.FromJson(json.children, 0);
         }
-        return <Statement main={json.main} text={json.text} key={key}>{children}</Statement>;
+        return <Statement main={json.main} text={json.text} key={key} extra={json.extra}>{children}</Statement>;
     }
 
     ToJson = () => {
