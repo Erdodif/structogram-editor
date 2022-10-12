@@ -1,41 +1,95 @@
 {
     "main":"start",
     "children":{
-        "main":"if",
-        "text":"i<n",
+        "main":"loop",
+        "text":"i < n",
         "children":[
             {
-                "main":"skip"
+                "main":"normal",
+                "text":"A"
             },
             {
                 "main":"normal",
-                "text":"Ki: i"
+                "text":"B"
             },
             {
-                "main":"switch",
-                "children":[
-                    {
-                        "main":"switch-if",
-                        "text":"A"
-                    },
-                    {
-                        "main":"switch-if",
-                        "text":"B"
-                    },
-                    {
-                        "main":"switch-if",
-                        "text":"C"
-                    },
-                    {
-                        "main":"switch-if",
-                        "text":"D"
-                    },
-                    {
-                        "main":"normal",
-                        "text":"Ki: i"
-                    }
-                ]
-            }
+                "main":"normal",
+                "text":"C"
+            },{
+                    "main":"loop-reverse",
+                    "text":"i < n",
+                    "children":[
+                        {
+                            "main":"normal",
+                            "text":"A"
+                        },
+                        {
+                            "main":"normal",
+                            "text":"B"
+                        },
+                        {
+                            "main":"normal",
+                            "text":"C"
+                        },
+                        {
+                            "main":"normal",
+                            "text":"Ki: i",
+                            "children":{
+                                "main":"normal",
+                                "text":"out",
+                                "children":{
+                                    "main":"start",
+                                    "children":{
+                                        "main":"loop",
+                                        "text":"i < n",
+                                        "children":[
+                                            {
+                                                "main":"normal",
+                                                "text":"A"
+                                            },
+                                            {
+                                                "main":"normal",
+                                                "text":"B"
+                                            },
+                                            {
+                                                "main":"normal",
+                                                "text":"C"
+                                            },
+                                            {
+                                                "main":"normal",
+                                                "text":"Ki: i",
+                                                "children":{
+                                                    "main":"loop-reverse",
+                                                    "text":"i < n",
+                                                    "children":[
+                                                        {
+                                                            "main":"normal",
+                                                            "text":"A"
+                                                        },
+                                                        {
+                                                            "main":"normal",
+                                                            "text":"B"
+                                                        },
+                                                        {
+                                                            "main":"normal",
+                                                            "text":"C"
+                                                        },
+                                                        {
+                                                            "main":"normal",
+                                                            "text":"Ki: i"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                            
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            
         ]
     }
 }
