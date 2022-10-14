@@ -1,6 +1,8 @@
 @import "variables";
 
 .structogram {
+    margin-block-start: 2em;
+    margin-block-end: 1em;
     margin-inline: auto;
     width: fit-content;
     border-inline-start: $border;

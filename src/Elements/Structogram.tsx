@@ -4,13 +4,12 @@ import Statement from "./Statement";
 import StatementObj from "./StatementObj";
 import StatementItem from "./StatementItem";
 import "./styles/Structogram.scss";
-import json from"./structogram.json";
 
-export default class Structogram extends Component {
+export default class Structogram extends Component<{json:any},{structure: StatementItem | null}> {
     constructor(props){
         super(props);
         this.state = {
-            structure: StatementItem.FromJson(json)
+            structure: StatementItem.FromJson(props.json)
         };
     }
 

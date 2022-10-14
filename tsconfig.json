@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "moduleResolution": "node",
+        "target": "ES2022",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true
+        // 👇️ ... rest
+    }
+}
