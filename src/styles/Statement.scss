@@ -26,33 +26,23 @@
     background: $color_statement_bg;
     height: fit-content;
     margin-inline: auto;
-    &:hover{
+    border-block-end: $border;
+    &:hover {
         background: $color_statement_bg_highlight;
     }
-    & .main {
+    & .content {
         position: relative;
         padding-block-start: 0.475em;
         padding-block-end: 0.275em;
+        padding-inline: 0.725em;
         min-height: 1em;
     }
-    & > .main:hover > .buttons,
+    & > .content:hover ~ .buttons,
     .buttons:hover {
         display: flex;
     }
-    &>.main > .buttons {
+    & > .buttons {
         @include button_drawer;
-    }
-    &.start,
-    &.normal,
-    &.skip {
-        .main {
-            border-block-end: $border;
-            border-inline-end: $border;
-            padding-inline: 1ch;
-        }
-        .content {
-            grid-template-columns: 1fr;
-        }
     }
     &.if {
         @include statement_if;

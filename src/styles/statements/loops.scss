@@ -4,12 +4,8 @@
     display: grid;
     grid-template-columns: 1.575em 1fr;
     grid-template-rows: fit-content fit-content fit-content;
-    grid-template-areas: 'head head' 'empty body' 'else else';
-    &>.main{
-        grid-area: head;
-        border-block-end:0;
-    }
-    &>.sub-content{
+    grid-template-areas: 'head head' 'empty body';
+    &>.statements{
         grid-area: body;
         display: grid;
         grid-template-columns: 1fr;
@@ -17,7 +13,7 @@
         border-collapse: collapse;
         &>.statement{
             width: 100%;
-            border-inline:$border;
+            border-inline-start:$border;
             box-sizing: border-box;
             border-block-end: $border;
             &>.main{
@@ -34,15 +30,14 @@
         }
     }
     &>.content{
-        grid-area: else;
-        border-block-start: $border;
+        grid-area: head;
     }
 }
 
 @mixin statement_loop_reverse{
     @include statement_loop;
-    grid-template-areas: 'gap body' 'head head' 'else else';
-    &>.sub-content>.statement{
+    grid-template-areas: 'empty body' 'head head';
+    &>.tatements>.statement{
         &:first-child{
             border-block-start: 0;
         }
