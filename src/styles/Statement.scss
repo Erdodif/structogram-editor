@@ -19,12 +19,16 @@
     color: $color_statement_text;
     box-sizing: border-box;
     position: relative;
-    font-family: "Courier New", Courier, monospace;
+    font-family: $font_structogram;
+    text-align: center;
     min-width: 10ch;
     width: 100%;
     background: $color_statement_bg;
     height: fit-content;
     margin-inline: auto;
+    &:hover{
+        background: $color_statement_bg_highlight;
+    }
     & .main {
         position: relative;
         padding-block-start: 0.475em;

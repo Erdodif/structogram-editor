@@ -1,13 +1,12 @@
 import React from 'react';
-import './App.css';
-import './Elements/Statement';
-import Structogram from './Elements/Structogram';
-import json from"./PreMade/structogram.json";
+import { Structogram } from './Elements/Structogram';
+import json from "./samples/Iteration2.json"
+import {StructogramController} from "structogram"
 
-function App():JSX.Element {
+function App() {
   return (
     <div className="App">
-      <Structogram json={json}/>
+      <Structogram controller={StructogramController.fromJson(json)}/>
     </div>
   );
 }

@@ -1,0 +1,28 @@
+@import "variables";
+
+.structogram {
+    margin-block-start: 1.225em;
+    margin-block-end: 1em;
+    margin-inline: auto;
+    width: fit-content;
+    font-family: $font_structogram;
+    color: white;
+    > .content {
+        border-inline-start: $border;
+        border-block-start: $border;
+        margin-inline: auto;
+        width: fit-content;
+    }
+    &.with-signature > .structogram-signature {
+        background: $color_statement_bg;
+        color: white;
+        border: $border;
+        border-radius: 1em;
+        padding-inline: 1em;
+        margin-block-end: 0.825em;
+    }
+    .statement-start,
+    .statement-end {
+        user-select: none;
+    }
+}
