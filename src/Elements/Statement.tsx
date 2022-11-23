@@ -38,7 +38,7 @@ function ContextMenu(props: { buttons: JSX.Element[] }) {
 }//TODO
 
 
-export function Statement(props: { content: string | null, mapping: number[] }) {
+export function Statement(props: { content: string | null, mapping: number[]}) {
     const [content, setContent] = useState(props?.content ?? "");
 
     return <div className="statement normal" id={mappingToId(props.mapping)}>
@@ -51,11 +51,19 @@ export function Statement(props: { content: string | null, mapping: number[] }) 
     </div>;
 }
 
-export function IfStatement(props: { content: string | null, mapping: number[] }) {
+export function IfStatement(props: { content: string | null, mapping: number[] ,statementBlocks:JSX.Element[][]}) {
     const [content, setContent] = useState(props?.content ?? "");
     return <div className="statement if">
         <div className="content">
             {content}
+        </div>
+        <div className="statement-blocks">
+            <div className="if-true">
+                {props?.statementBlocks[0]}
+            </div>
+            <div className="if-false">
+                {props?.statementBlocks[1]}
+            </div>
         </div>
     </div>;
 }
