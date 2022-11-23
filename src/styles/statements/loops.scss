@@ -1,47 +1,38 @@
 @import "../_variables.scss";
 
-@mixin statement_loop{
+@mixin statement_loop {
     display: grid;
     grid-template-columns: 1.575em 1fr;
     grid-template-rows: fit-content fit-content fit-content;
-    grid-template-areas: 'head head' 'empty body';
-    &>.statements{
+    grid-template-areas: "head head" "empty body";
+    & > .statements {
         grid-area: body;
         display: grid;
         grid-template-columns: 1fr;
         flex-direction: column;
         border-collapse: collapse;
-        &>.statement{
-            width: 100%;
-            border-inline-start:$border;
-            box-sizing: border-box;
-            border-block-end: $border;
-            &>.main{
-                min-width: calc(100% - 2em);
-                border-inline:0;
-                border-block-end:0;
-            }
-            &:first-child{
-                border-block-start: $border;
-            }
-            &:last-child{
-                border-block-end: 0;
+        margin-inline-end: -$border_width;
+        & > .statement {
+            width: calc(100% + $border_width);
+            min-height: calc(100% + $border_width);
+            &:last-child {
+                margin-block-end: -$border_width;
             }
         }
     }
-    &>.content{
+    & > .content {
         grid-area: head;
     }
 }
 
-@mixin statement_loop_reverse{
+@mixin statement_loop_reverse {
     @include statement_loop;
-    grid-template-areas: 'empty body' 'head head';
-    &>.tatements>.statement{
-        &:first-child{
+    grid-template-areas: "empty body" "head head";
+    & > .tatements > .statement {
+        &:first-child {
             border-block-start: 0;
         }
-        &:last-child{
+        &:last-child {
             border-block-end: $border;
         }
     }

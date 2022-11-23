@@ -21,16 +21,20 @@
     position: relative;
     font-family: $font_structogram;
     text-align: center;
-    min-width: 10ch;
-    width: 100%;
+    min-width: $statement_min_width;
+    max-width: $statement_max_width;
+    width: calc(100% + $border_width * 2);
     background: $color_statement_bg;
     height: fit-content;
     margin-inline: auto;
-    border-block-end: $border;
+    border: $border;
+    margin-inline: -$border_width;
+    margin-block-start: -$border_width;
+    margin-block-end: calc($border_width / -2);
     &:hover {
         background: $color_statement_bg_highlight;
     }
-    & .content {
+    & > .content {
         position: relative;
         padding-block-start: 0.475em;
         padding-block-end: 0.275em;

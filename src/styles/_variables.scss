@@ -14,6 +14,8 @@ $icon_diagonal_line: url("/icons/diagonal_line.svg");
     --color-s-button-text: black;
     --color-s-btn-holder-bg:rgb(25, 25, 25);
     --font-structogram:"Courier New", Courier, monospace;
+    --statement-min-witch:10ch;
+    --statement-max-width:40ch;
 }
 
 //TODO, az elágazás indikátor nem vált színt, mert az SVG csak háttérképként és nem DOM-elemként van jelen
@@ -29,6 +31,10 @@ $icon_diagonal_line: url("/icons/diagonal_line.svg");
     --color-s-button-text: black;
     --color-s-btn-holder-bg:rgb(184, 184, 184);
 }
+
+
+$statement_min_width : var(--statement-min-witch);
+$statement_max_width : var(--statement-max-width);
 
 $color_statement_bg : var(--color-statement-bg);
 $color_statement_text : var(--color-statement-text);
