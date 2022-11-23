@@ -38,7 +38,7 @@ function ContextMenu(props: { buttons: JSX.Element[] }) {
 }//TODO
 
 
-export function Statement(props: { content: string | null, mapping: number[]}) {
+export function Statement(props: { content: string | null, mapping: number[] }) {
     const [content, setContent] = useState(props?.content ?? "");
 
     return <div className="statement normal" id={mappingToId(props.mapping)}>
@@ -51,7 +51,7 @@ export function Statement(props: { content: string | null, mapping: number[]}) {
     </div>;
 }
 
-export function IfStatement(props: { content: string | null, mapping: number[] ,statementBlocks:JSX.Element[][]}) {
+export function IfStatement(props: { content: string | null, mapping: number[], statementBlocks: JSX.Element[][] }) {
     const [content, setContent] = useState(props?.content ?? "");
     return <div className="statement if">
         <div className="content">
@@ -68,11 +68,25 @@ export function IfStatement(props: { content: string | null, mapping: number[] ,
     </div>;
 }
 
-export function SwitchStatement(props: { content: string | null, mapping: number[] }) {
+export function SwitchStatement(props: { content: string | null, mapping: number[], blocks: { case: string, statements: JSX.Element[] }[] }) {
     const [content, setContent] = useState(props?.content ?? "");
-    return <div className="statement">
-        <div className="content">
-            {content}
+    let blocks = [];
+    for (let i = 0; i < props.blocks.length; i++) {
+        blocks.push(
+            <div className="case" key={`${props.mapping}\\${i}`}>
+                <div className={props.blocks[i].case === "switch-else" ? "switch-else" : "switch-case"}>
+                    {props.blocks[i].case}
+                </div>
+                <div className="switch-statements">
+                    {props.blocks[i].statements}
+                </div>
+            </div>
+        );
+    }
+
+    return <div className="statement switch">
+        <div className="case-blocks">
+            {blocks}
         </div>
     </div>;
 }
