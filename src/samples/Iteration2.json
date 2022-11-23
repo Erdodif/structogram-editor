@@ -38,7 +38,11 @@
                                 "content": "Metszet[Mdb] := A[i]"
                             }
                         ],
-                        []
+                        [
+                            {
+                                "type":"empty"
+                            }
+                        ]
                     ]
                 }
             ]
