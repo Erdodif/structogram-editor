@@ -34,13 +34,15 @@ export function statementToJSX(statement: Statement, mapping: number[]) {
             return <RIfStatement key={mappingToId(mapping)} mapping={mapping} content={sIf.content} statementBlocks={[truePart, falsePart]} />
         case StatementType.S_SWITCH://TODO
             let sSwitch = statement as SwitchStatement;
-            let blocks: JSX.Element[] = [];
-            for (const index in sSwitch.blocks) {
-                if (Object.prototype.hasOwnProperty.call(sSwitch.blocks, index)) {
-                    const element = sSwitch.blocks[index];
+            let blocks: { case: string, statements: JSX.Element[] }[] = [];
+            for (let i = 0; i < sSwitch.blocks.length; i++) {
+                let statements: JSX.Element[] = [];
+                for (let j = 0; j < sSwitch.blocks[i].statements.length; j++) {
+                    statements.push(statementToJSX(sSwitch.blocks[i].statements[j], [...mapping, i, j]))
                 }
+                blocks.push({ case: sSwitch.blocks[i].case, statements: statements });
             }
-            return <RSwitchStatement key={mappingToId(mapping)} mapping={mapping} content={statement.content} /*blocks={(statement as SwitchStatement).blocks}*/ />
+            return <RSwitchStatement key={mappingToId(mapping)} mapping={mapping} content={statement.content} blocks={blocks} />
         case StatementType.S_LOOP:
             let sLoop = statement as LoopStatement;
             statements = [];
