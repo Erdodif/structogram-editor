@@ -28,17 +28,17 @@
     height: fit-content;
     margin-inline: auto;
     border: $border;
-    margin-inline: -$border_width;
+    margin-inline: calc($border_width * -1);
     margin-block-start: -$border_width;
-    margin-block-end: calc($border_width / -2);
-    &:hover {
+    margin-block-end: calc($border_width / -4);
+    &:hover:not(.switch) {
         background: $color_statement_bg_highlight;
     }
     & > .content {
         position: relative;
         padding-block-start: 0.475em;
         padding-block-end: 0.275em;
-        padding-inline: 0.725em;
+        padding-inline: 1ch;
         min-height: 1em;
     }
     & > .content:hover ~ .buttons,

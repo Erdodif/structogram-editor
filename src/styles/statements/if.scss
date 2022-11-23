@@ -25,12 +25,11 @@
 }
 
 @mixin statement_if {
-    width: calc(100% + $border_width);
+    width: calc(100% + $border_width * 2);
     position: relative;
     & > .content {
         border-block-end: $border;
-        border-inline-end: $border;
-        margin-inline-end: -$border_width;
+        margin-block-end: 0;
         padding-inline: 3.2ch;
         position: relative;
         &::before {
@@ -46,48 +45,96 @@
         grid-template-areas: "true false";
         justify-items: stretch;
         align-items: stretch;
-        margin-block-end: calc($border_width * -2);
-        //TODO Stretch Items
-        & > .if-true {
-            grid-area: true;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            & > .statement{
-                @include border_collapse(false,true)
-            }
-        }
-        & > .if-false {
-            grid-area: false;
+        margin-block-end: $border_width;
+        & > .if-false,
+        > .if-true {
+            height: 100%;
             display: flex;
             flex-direction: column;
             flex-wrap: nowrap;
             align-items: stretch;
+            align-content: stretch;
+            justify-content: flex-start;
+            & > .statement {
+                height: calc(100% + $border_width * 5);
+            }
+            & > .statement:last-child {
+                margin-block-end: calc($border_width * -2);
+            }
+        }
+
+        & > .if-true {
+            grid-area: true;
+        }
+        & > .if-false {
+            margin-inline-end: calc($border_width * -1);
+            grid-area: false;
+            & > .statement {
+                margin-inline-start: 0;
+                width: 100%;
+            }
         }
     }
 }
 
 @mixin statement_switch {
-    & > .main {
-        display: none;
-    }
-    & > .sub-content {
+    & > .case-blocks {
+        width: 100%;
+        height: 100%;
         display: flex;
+        grid-template-rows: 1fr;
         flex-direction: row;
-        flex-wrap: no-wrap;
+        flex-wrap: nowrap;
         align-items: stretch;
-        & > .statement > .content > .statement {
-            margin-block: auto;
-        }
-        & > .switch-if > .main::before {
-            @include if_indicator_true;
-        }
-        & > .switch-else > .main {
-            color: transparent;
-            user-select: none;
-            &::before {
-                color: $color_statement_text;
-                @include if_indicator_false("H");
+        justify-content: stretch;
+        & > .case {
+            &:hover {
+                background: $color_statement_bg_highlight;
+            }
+            margin-block-end: -$border_width;
+            &:last-child {
+                margin-inline-end: -$border_width;
+            }
+            width: calc(100% + $border_width * 2);
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: max-content max-content;
+            grid-template-areas: "case" "statements";
+            align-self: stretch;
+            & > .switch-else,
+            > .switch-case {
+                margin-block-start: -$border_width;
+                margin-inline-start: -$border_width;
+                border: $border;
+                grid-area: case;
+            }
+            /*& > .switch-case::before {
+                @include if_indicator_true;
+            }*/
+            & > .switch-else {
+                color: transparent;
+                user-select: none;
+                /*&::before {
+                    color: $color_statement_text;
+                    @include if_indicator_false("H");
+                }*/
+            }
+            & > .switch-statements {
+                grid-area: statements;
+                margin-inline-end: $border_width;
+                display: flex;
+                height: 100%;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                align-self: stretch;
+                align-items: stretch;
+                align-content: stretch;
+                &>*{
+                    align-self: stretch;
+                }
+                & > :last-child {
+                    margin-block-end: -$border_width;
+                }
             }
         }
     }

@@ -9,10 +9,10 @@
     position: absolute;
 }
 
-svg.image-indicator-stroke{
-    path{
-        stroke:$color_statement_border;
-        stroke-width:1.5 ;
+svg.image-indicator-stroke {
+    path {
+        stroke: $color_statement_border;
+        stroke-width: 1.5;
     }
 }
 
@@ -22,11 +22,11 @@ svg.image-indicator-stroke{
     mask: $img no-repeat $width $height;
 }
 
-@mixin border_collapse($vertical:false,$horizontal:false){
-    @if($vertical){
+@mixin border_collapse($vertical: false, $horizontal: false) {
+    @if ($vertical) {
         margin-block: calc($border_width * -2);
     }
-    @if($horizontal){
+    @if ($horizontal) {
         margin-inline: calc($border_width * -2);
     }
 }
