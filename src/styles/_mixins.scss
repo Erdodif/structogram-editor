@@ -21,3 +21,12 @@ svg.image-indicator-stroke{
     -webkit-mask: $img no-repeat $width $height;
     mask: $img no-repeat $width $height;
 }
+
+@mixin border_collapse($vertical:false,$horizontal:false){
+    @if($vertical){
+        margin-block: calc($border_width * -2);
+    }
+    @if($horizontal){
+        margin-inline: calc($border_width * -2);
+    }
+}

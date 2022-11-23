@@ -25,11 +25,12 @@
 }
 
 @mixin statement_if {
+    width: calc(100% + $border_width);
     position: relative;
-    display: grid;
-    &> .main {
+    & > .content {
         border-block-end: $border;
         border-inline-end: $border;
+        margin-inline-end: -$border_width;
         padding-inline: 3.2ch;
         position: relative;
         &::before {
@@ -39,19 +40,29 @@
             @include if_indicator_false("H");
         }
     }
-    &> .sub-content {
+    & > .statement-blocks {
         display: grid;
-        grid-template-columns: repeat(2, max-content);
         grid-template-rows: 1fr;
-        grid-template-areas: 'true false';
+        grid-template-areas: "true false";
         justify-items: stretch;
         align-items: stretch;
+        margin-block-end: calc($border_width * -2);
         //TODO Stretch Items
-        &>.if-true {
+        & > .if-true {
             grid-area: true;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            & > .statement{
+                @include border_collapse(false,true)
+            }
         }
-        &>.if-false {
+        & > .if-false {
             grid-area: false;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: stretch;
         }
     }
 }
@@ -65,8 +76,8 @@
         flex-direction: row;
         flex-wrap: no-wrap;
         align-items: stretch;
-        &>.statement>.content>.statement{
-            margin-block:auto;
+        & > .statement > .content > .statement {
+            margin-block: auto;
         }
         & > .switch-if > .main::before {
             @include if_indicator_true;
