@@ -20,27 +20,34 @@ export function statementToJSX(statement: Statement, mapping: number[]) {
         case StatementType.S_IF://TODO
             let sIf = statement as IfStatement;
             let truePart: JSX.Element[] = [];
-            if (sIf.statementBlocks[0]?.length > 0) {
-
+            if (sIf.statementBlocks.length > 0) {
+                for (let i = 0; i < sIf.statementBlocks[0].length; i++) {
+                    truePart.push(statementToJSX(sIf.statementBlocks[0][i], [...mapping, 0, i]));
+                }
             }
-            return <RIfStatement key={mappingToId(mapping)} mapping={mapping} content={sIf.content} /*blocks={sIf.statementBlocks}*/ />
+            let falsePart: JSX.Element[] = [];
+            if (sIf.statementBlocks.length > 1) {
+                for (let i = 0; i < sIf.statementBlocks[1].length; i++) {
+                    falsePart.push(statementToJSX(sIf.statementBlocks[1][i], [...mapping, 1, i]));
+                }
+            }
+            return <RIfStatement key={mappingToId(mapping)} mapping={mapping} content={sIf.content} statementBlocks={[truePart, falsePart]} />
         case StatementType.S_SWITCH://TODO
             let sSwitch = statement as SwitchStatement;
             let blocks: JSX.Element[] = [];
             for (const index in sSwitch.blocks) {
                 if (Object.prototype.hasOwnProperty.call(sSwitch.blocks, index)) {
                     const element = sSwitch.blocks[index];
-
                 }
             }
             return <RSwitchStatement key={mappingToId(mapping)} mapping={mapping} content={statement.content} /*blocks={(statement as SwitchStatement).blocks}*/ />
         case StatementType.S_LOOP:
             let sLoop = statement as LoopStatement;
             statements = [];
-            for (const index in sLoop.statements) {
+            for (let i = 0; i < sLoop.statements.length; i++) {
                 let subMap = [...mapping];
-                subMap.push(Number(index));
-                statements.push(statementToJSX(sLoop.statements[index], subMap));
+                subMap.push(Number(i));
+                statements.push(statementToJSX(sLoop.statements[i], subMap));
             }
             return <RLoopStatement key={mappingToId(mapping)} mapping={mapping} content={statement.content} statements={statements} />
         case StatementType.S_LOOP_REVERSE:
