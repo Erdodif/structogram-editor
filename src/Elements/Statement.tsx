@@ -74,7 +74,7 @@ export function SwitchStatement(props: { content: string | null, mapping: number
     for (let i = 0; i < props.blocks.length; i++) {
         blocks.push(
             <div className="case" key={`${props.mapping}\\${i}`}>
-                <div className={props.blocks[i].case === "switch-else" ? "switch-else" : "switch-case"}>
+                <div className={props.blocks[i].case.trim() === "else" ? "switch-else" : "switch-case"}>
                     {props.blocks[i].case}
                 </div>
                 <div className="switch-statements">

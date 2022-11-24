@@ -2,6 +2,7 @@
 
 @mixin statement_loop {
     display: grid;
+    max-width: unset;
     grid-template-columns: 1.575em 1fr;
     grid-template-rows: fit-content fit-content fit-content;
     grid-template-areas: "head head" "empty body";

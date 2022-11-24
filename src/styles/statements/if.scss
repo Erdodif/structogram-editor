@@ -27,6 +27,7 @@
 @mixin statement_if {
     width: calc(100% + $border_width * 2);
     position: relative;
+    max-width: unset;
     & > .content {
         border-block-end: $border;
         margin-block-end: 0;
@@ -78,6 +79,7 @@
 }
 
 @mixin statement_switch {
+    max-width: unset;
     & > .case-blocks {
         width: 100%;
         height: 100%;
@@ -85,7 +87,6 @@
         grid-template-rows: 1fr;
         flex-direction: row;
         flex-wrap: nowrap;
-        align-items: stretch;
         justify-content: stretch;
         & > .case {
             &:hover {
@@ -95,45 +96,47 @@
             &:last-child {
                 margin-inline-end: -$border_width;
             }
+            min-width: $statement_min_width;
             width: calc(100% + $border_width * 2);
             display: grid;
             grid-template-columns: 1fr;
-            grid-template-rows: max-content max-content;
+            grid-template-rows: max-content auto;
             grid-template-areas: "case" "statements";
             align-self: stretch;
             & > .switch-else,
-            > .switch-case {
+            & > .switch-case {
                 margin-block-start: -$border_width;
                 margin-inline-start: -$border_width;
                 border: $border;
                 grid-area: case;
             }
-            /*& > .switch-case::before {
-                @include if_indicator_true;
-            }*/
+            /* & > .switch-case::before {
+                    @include if_indicator_true;
+                }*/
             & > .switch-else {
                 color: transparent;
                 user-select: none;
-                /*&::before {
-                    color: $color_statement_text;
-                    @include if_indicator_false("H");
-                }*/
+                /* &::before {
+                        color: $color_statement_text;
+                        @include if_indicator_false("H");
+                    }*/
             }
             & > .switch-statements {
                 grid-area: statements;
+                background: crimson;
                 margin-inline-end: $border_width;
-                display: flex;
-                height: 100%;
+                display: flex;                
+                min-height: 100%;
                 flex-direction: column;
                 flex-wrap: nowrap;
-                align-self: stretch;
                 align-items: stretch;
-                align-content: stretch;
-                &>*{
-                    align-self: stretch;
-                }
+                margin-block-end: -$border_width;
+                
                 & > :last-child {
-                    margin-block-end: -$border_width;
+                    margin-block-end: $border_width;
+                }
+                & > .statement{
+                    height: 100%;
                 }
             }
         }
