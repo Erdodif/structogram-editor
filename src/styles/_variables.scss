@@ -5,6 +5,9 @@ $icon_diagonal_line: url("/icons/diagonal_line.svg");
 
 :root {
     --color-page-bg: rgb(48, 25, 60);
+    --color-editable-bg: rgb(202, 155, 228);
+    --color-editable-text:rgb(16, 0, 70);
+    --color-editable-border:rgb(55, 24, 72);
     --color-statement-bg: rgb(39, 89, 105);
     --color-statement-border: rgb(0, 0, 0);
     --color-statement-text: white;
@@ -17,8 +20,6 @@ $icon_diagonal_line: url("/icons/diagonal_line.svg");
     --statement-min-witch: calc(3ch + $border_width * 2);
     --statement-max-width: calc(40ch + $border_width * 2);
 }
-
-//TODO, az elágazás indikátor nem vált színt, mert az SVG csak háttérképként és nem DOM-elemként van jelen
 
 @mixin theme-monochrome {
     --color-page-bg: white;
@@ -35,6 +36,9 @@ $icon_diagonal_line: url("/icons/diagonal_line.svg");
 $statement_min_width: var(--statement-min-witch);
 $statement_max_width: var(--statement-max-width);
 
+$color_editable_bg :var(--color-editable-bg);
+$color_editable_text :var(--color-editable-text);
+$color_editable_border :var(--color-editable-border);
 $color_statement_bg: var(--color-statement-bg);
 $color_statement_text: var(--color-statement-text);
 $color_page_bg: var(--color-page-bg);

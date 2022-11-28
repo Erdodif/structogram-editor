@@ -6,7 +6,7 @@
     @include icon_background(calc(100% - $border_width * 3 + 0.075em));
     background-image: $icon_diagonal_line;
     top: math.div(-$border_width, 2);
-    height: calc(100% + $border_width);
+    bottom: 0;
     margin-block-start: -0.025em;
     padding-block-start: 0.925em;
     padding-inline-end: 0.5ch;
@@ -28,19 +28,25 @@
     width: calc(100% + $border_width * 2);
     position: relative;
     max-width: unset;
-    & > .content {
-        border-block-end: $border;
-        margin-block-end: 0;
-        padding-inline: 3.2ch;
-        position: relative;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-areas: "head" "body";
+    & > .content{
         &::before {
+            z-index: 10;
             @include if_indicator_true("I");
         }
         &::after {
             @include if_indicator_false("H");
         }
+        &> .editable {
+        grid-area: head;
+        border-block-end: $border;
+    }
+
     }
     & > .statement-blocks {
+        grid-area: body;
         display: grid;
         grid-template-rows: 1fr;
         grid-template-areas: "true false";
@@ -84,7 +90,6 @@
         width: 100%;
         height: 100%;
         display: flex;
-        grid-template-rows: 1fr;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: stretch;

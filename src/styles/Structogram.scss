@@ -4,9 +4,10 @@
     margin-block-start: 1.225em;
     margin-block-end: 1em;
     margin-inline: auto;
-    width: auto;
+    width: fit-content;
     font-family: $font_structogram;
     color: white;
+    resize:horizontal;
     > .content {
         border-inline: $border;
         border-block-start: $border;

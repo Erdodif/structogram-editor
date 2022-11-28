@@ -1,0 +1,17 @@
+@import "./_variables";
+
+.editable {
+    position: relative;
+    text-align: center;
+    display: block;
+    padding-block-start: 0.475em;
+    padding-block-end: 0.275em;
+    min-height: 1em;
+    &:focus {
+        font-size: 1em;
+        z-index: 5;
+        background: $color_editable_bg;
+        color: $color_editable_text;
+        border: $border_width solid $color_editable_border;
+    }
+}

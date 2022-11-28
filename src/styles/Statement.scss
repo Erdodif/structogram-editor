@@ -27,6 +27,8 @@
     background: $color_statement_bg;
     height: fit-content;
     margin-inline: auto;
+    display: grid;
+    grid-template-areas: "head";
     border: $border;
     margin-inline: calc($border_width * -1);
     margin-block-start: -$border_width;
@@ -35,11 +37,9 @@
         background: $color_statement_bg_highlight;
     }
     & > .content {
-        position: relative;
-        padding-block-start: 0.475em;
-        padding-block-end: 0.275em;
-        padding-inline: 1ch;
-        min-height: 1em;
+        & > .editable {
+            grid-area: head;
+        }
     }
     & > .content:hover ~ .buttons,
     .buttons:hover {
