@@ -2,26 +2,51 @@
 @import "../mixins";
 
 @mixin if_indicator_false($content: " ") {
-    @include render_pseudo($content);
-    @include icon_background(calc(100% - $border_width * 3 + 0.075em));
-    background-image: $icon_diagonal_line;
-    top: math.div(-$border_width, 2);
-    height: calc(100% + $border_width);
-    margin-block-start: -0.025em;
-    padding-block-start: 0.925em;
-    padding-inline-end: 0.5ch;
-    display: block;
-    width: 3.5ch;
-    text-align: right;
-    right: 0%;
-    left: unset;
+    & > .indicator-holder {
+        background-color: transparent;
+        position: absolute;
+        inset: calc($border_width / -2) calc($border_width / -4) calc($border_width / -2) calc($border_width / -4);
+        &::after {
+            @include render_pseudo($content);
+            background-color: transparent;
+            right: 0;
+            bottom: 0;
+            width: 1.75ch;
+        }
+    }
+    &::after {
+        @include render_pseudo(" ");
+        background: $color_statement_border;
+        top: -$border_width;
+        bottom: -$border_width;
+        right: 1.65ch;
+        width: calc($border_width / 1.005);
+        transform: skewX(-25deg);
+    }
 }
 
 @mixin if_indicator_true($content: " ") {
-    @include if_indicator_false($content);
-    transform: scaleX(-1);
-    left: 0%;
-    right: unset;
+    & > .indicator-holder {
+        background-color: transparent;
+        position: absolute;
+        inset: calc($border_width / -2) calc($border_width / -4) calc($border_width / -2) calc($border_width / -4);
+        &::before {
+            @include render_pseudo($content);
+            background-color: transparent;
+            left: 0;
+            bottom: 0;
+            width: 1.75ch;
+        }
+    }
+    &::before {
+        @include render_pseudo(" ");
+        background: $color_statement_border;
+        top: -$border_width;
+        bottom: -$border_width;
+        left: 1.65ch;
+        width: calc($border_width / 1.005);
+        transform: skewX(25deg);
+    }
 }
 
 @mixin statement_if {
@@ -33,12 +58,8 @@
         margin-block-end: 0;
         padding-inline: 3.2ch;
         position: relative;
-        &::before {
-            @include if_indicator_true("I");
-        }
-        &::after {
-            @include if_indicator_false("H");
-        }
+        @include if_indicator_true("I");
+        @include if_indicator_false("H");
     }
     & > .statement-blocks {
         display: grid;
@@ -123,19 +144,18 @@
             }
             & > .switch-statements {
                 grid-area: statements;
-                background: crimson;
                 margin-inline-end: $border_width;
-                display: flex;                
+                display: flex;
                 min-height: 100%;
                 flex-direction: column;
                 flex-wrap: nowrap;
                 align-items: stretch;
                 margin-block-end: -$border_width;
-                
+
                 & > :last-child {
                     margin-block-end: $border_width;
                 }
-                & > .statement{
+                & > .statement {
                     height: 100%;
                 }
             }
