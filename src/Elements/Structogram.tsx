@@ -70,8 +70,6 @@ export function Structogram(props: any): JSX.Element {
     const [locked, setLocked] = useState(props?.locked ?? false);
     const [scope, setScope] = useState<Number[]>([]);
     const [controller, setController] = useState<StructogramController>(props?.controller ?? new StructogramController());
-    const [signature, setSignature] = useState<string | null>(controller.structogram.name);
-
     const getStatements = () => {
         let list: JSX.Element[] = [];
         let statements: Statement[] = controller.structogram.statements;
@@ -79,6 +77,11 @@ export function Structogram(props: any): JSX.Element {
             list.push(statementToJSX(statements[index], [Number(index)]));
         }
         return list;
+    }
+
+    const getId: () => string = () => {
+        let name = controller.structogram.name?.replaceAll(" ", "_").replaceAll("-", "_");
+        return `structogram_${name}`
     }
 
 
@@ -91,15 +94,25 @@ export function Structogram(props: any): JSX.Element {
         classList = classList.concat(" with-signature");
         hasSignature = true;
     }
+    let element = document.getElementById(`signature_${getId()}`);
+    if (element === null) {
+        element = document.getElementById(getId())!;
+    }
+    if (element) {
+        element.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    }
+
     return (
-        <div className={classList}>
-            {hasSignature ? <div className="structogram-signature">{controller.structogram.name}</div> : null}
+        <div className={classList} id={getId()}>
+            {hasSignature ? <div className="structogram-signature" id={`signature_${getId()}`}>{controller.structogram.name}</div> : null}
             <div className="content">
-                {controller.structogram?.renderStart ? <div className="statement statement-start">START</div> : null}
+                {controller.structogram?.renderStart ? <div className="statement statement-start" id={`start_${getId()}`}>START</div> : null}
                 <div className="structogram-scope">
                     {getStatements()}
                 </div>
-                {controller.structogram?.renderStart ? <div className="statement statement-end">END</div> : null}
+                {controller.structogram?.renderStart ? <div className="statement statement-end" id={`end_${getId()}`}>END</div> : null}
             </div>
         </div>
     );

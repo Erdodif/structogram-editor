@@ -1,6 +1,6 @@
-import { DOMElement, useRef, useState } from "react"
-import { renderIntoDocument } from "react-dom/test-utils";
+import { useState } from "react"
 import "../styles/Statement.scss";
+import { useContentEditable } from "./Editable";
 
 export function mappingToId(mapping: number[]): string {
     let id: string = "S".concat(String(mapping[0]));
@@ -31,19 +31,13 @@ function ActionButton(props: { name: string, action: () => void }) {
     </div>
 }//TODO
 
-function ContextMenu(props: { buttons: JSX.Element[] }) {
-    return <div id="context-menu">
-        {props.buttons}
-    </div>
-}//TODO
-
-
 export function Statement(props: { content: string | null, mapping: number[] }) {
     const [content, setContent] = useState(props?.content ?? "");
 
-    return <div className="statement normal" id={mappingToId(props.mapping)}>
+    let id = mappingToId(props.mapping);
+    return <div className="statement normal" id={id}>
         <div className="content">
-            {content}
+            {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="buttons">
             {useStatementButtons(() => { }, () => { })}
@@ -53,9 +47,11 @@ export function Statement(props: { content: string | null, mapping: number[] }) 
 
 export function IfStatement(props: { content: string | null, mapping: number[], statementBlocks: JSX.Element[][] }) {
     const [content, setContent] = useState(props?.content ?? "");
-    return <div className="statement if">
+    let id = mappingToId(props.mapping);
+    return <div className="statement if" id={id}>
         <div className="content">
-            {content}
+            {useContentEditable(content, setContent, id + "_content")}
+            <div className="indicator-holder"/>
         </div>
         <div className="statement-blocks">
             <div className="if-true">
@@ -84,7 +80,7 @@ export function SwitchStatement(props: { content: string | null, mapping: number
         );
     }
 
-    return <div className="statement switch">
+    return <div className="statement switch" id={mappingToId(props.mapping)}>
         <div className="case-blocks">
             {blocks}
         </div>
@@ -93,9 +89,10 @@ export function SwitchStatement(props: { content: string | null, mapping: number
 
 export function LoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] }) {
     const [content, setContent] = useState(props?.content ?? "");
-    return <div className="statement loop">
+    let id = mappingToId(props.mapping)
+    return <div className="statement loop" id={id}>
         <div className="content">
-            {content}
+            {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="statements">
             {props?.statements}
@@ -108,9 +105,10 @@ export function LoopStatement(props: { content: string | null, mapping: number[]
 
 export function ReversedLoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] }) {
     const [content, setContent] = useState(props?.content ?? "");
-    return <div className="statement loop-reverse">
+    let id = mappingToId(props.mapping)
+    return <div className="statement loop-reverse" id={id}>
         <div className="content">
-            {content}
+            {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="statements">
             {props?.statements}
