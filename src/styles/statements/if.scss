@@ -1,6 +1,14 @@
 @import "../variables";
 @import "../mixins";
 
+@mixin if_indicator_border{
+    background: $color_statement_border;
+    bottom: -$border_width;
+    max-height: 4.795em;
+    height: calc(100% + $border_width);
+    width: $border_width;
+}
+
 @mixin if_indicator_false($content: " ") {
     & > .indicator-holder {
         background-color: transparent;
@@ -16,11 +24,8 @@
     }
     &::after {
         @include render_pseudo(" ");
-        background: $color_statement_border;
-        top: -$border_width;
-        bottom: -$border_width;
+        @include if_indicator_border();
         right: 1.65ch;
-        width: calc($border_width / 1.005);
         transform: skewX(-25deg);
     }
 }
@@ -40,11 +45,8 @@
     }
     &::before {
         @include render_pseudo(" ");
-        background: $color_statement_border;
-        top: -$border_width;
-        bottom: -$border_width;
+        @include if_indicator_border();
         left: 1.65ch;
-        width: calc($border_width / 1.005);
         transform: skewX(25deg);
     }
 }
