@@ -50,8 +50,8 @@ export function IfStatement(props: { content: string | null, mapping: number[], 
     let id = mappingToId(props.mapping);
     return <div className="statement if" id={id}>
         <div className="content">
-            {useContentEditable(content, setContent, id + "_content")}
             <div className="indicator-holder"/>
+            {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="statement-blocks">
             <div className="if-true">
