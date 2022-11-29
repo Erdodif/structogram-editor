@@ -6,6 +6,21 @@
     display: block;
     padding-block-start: 0.475em;
     padding-block-end: 0.275em;
+    &:empty {
+        background: rgba(0, 0, 0, 0);
+        z-index: 2;
+        &::before {
+            background: $color_statement_bg;
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            height: 100%;
+            user-select: none;
+            content: "-";
+            color: $color_statement_text;
+            line-height: 100%;
+        }
+    }
     &:focus {
         outline-style: none;
         margin: -$border_width;
@@ -14,9 +29,15 @@
         background: $color_editable_bg;
         color: $color_editable_text;
         border: $border_width solid $color_editable_border;
-        &::selection{
+        &::selection {
             background: $color_editable_border;
             color: $color_editable_bg;
+        }
+        &:empty {
+            background: $color_editable_bg;
+            &::before {
+                content: unset;
+            }
         }
     }
 }
