@@ -23,16 +23,17 @@
     }
     background: $color_statement_bg;
     color: $color_statement_text;
-    box-sizing: border-box;
-    position: relative;
     font-family: $font_structogram;
-    text-align: center;
     min-width: $statement_min_width;
     max-width: $statement_max_width;
     width: calc(100% + $border_width * 2);
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
     height: fit-content;
     margin-inline: auto;
     display: grid;
+    align-items: stretch;
     grid-template-areas: "head";
     border: $border;
     margin-inline: calc($border_width * -1);
