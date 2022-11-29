@@ -8,6 +8,7 @@ export function useContentEditable(content:string,setContent:React.Dispatch<Reac
 
     return  (
         <ContentEditable 
+            spellCheck={false}
             html={content}
             className={"editable"}
             id={id} 
