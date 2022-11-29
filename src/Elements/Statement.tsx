@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { StructogramController } from "structogram";
 import "../styles/Statement.scss";
 import { useContentEditable } from "./Editable";
 
@@ -31,21 +32,22 @@ function ActionButton(props: { name: string, action: () => void }) {
     </div>
 }//TODO
 
-export function Statement(props: { content: string | null, mapping: number[] }) {
+export function Statement(props: { content: string | null, mapping: number[], controller:StructogramController}) {
     const [content, setContent] = useState(props?.content ?? "");
 
     let id = mappingToId(props.mapping);
+
     return <div className="statement normal" id={id}>
         <div className="content">
             {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="buttons">
-            {useStatementButtons(() => { }, () => { })}
+            {useStatementButtons(() => { props.controller.setElementByMapping(props.mapping,null) }, () => { })}
         </div>
     </div>;
 }
 
-export function IfStatement(props: { content: string | null, mapping: number[], statementBlocks: JSX.Element[][] }) {
+export function IfStatement(props: { content: string | null, mapping: number[], statementBlocks: JSX.Element[][], controller:StructogramController}) {
     const [content, setContent] = useState(props?.content ?? "");
     let id = mappingToId(props.mapping);
     return <div className="statement if" id={id}>
@@ -64,7 +66,7 @@ export function IfStatement(props: { content: string | null, mapping: number[], 
     </div>;
 }
 
-export function SwitchStatement(props: { content: string | null, mapping: number[], blocks: { case: string, statements: JSX.Element[] }[] }) {
+export function SwitchStatement(props: { content: string | null, mapping: number[], blocks: { case: string, statements: JSX.Element[] }[], controller:StructogramController }) {
     const [content, setContent] = useState(props?.content ?? "");
     let blocks = [];
     for (let i = 0; i < props.blocks.length; i++) {
@@ -87,7 +89,7 @@ export function SwitchStatement(props: { content: string | null, mapping: number
     </div>;
 }
 
-export function LoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] }) {
+export function LoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] , controller:StructogramController}) {
     const [content, setContent] = useState(props?.content ?? "");
     let id = mappingToId(props.mapping)
     return <div className="statement loop" id={id}>
@@ -103,7 +105,7 @@ export function LoopStatement(props: { content: string | null, mapping: number[]
     </div>;
 }
 
-export function ReversedLoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] }) {
+export function ReversedLoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] , controller:StructogramController}) {
     const [content, setContent] = useState(props?.content ?? "");
     let id = mappingToId(props.mapping)
     return <div className="statement loop-reverse" id={id}>
