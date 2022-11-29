@@ -71,6 +71,7 @@
         grid-area: body;
         display: grid;
         grid-template-rows: 1fr;
+        grid-template-columns: auto auto;
         grid-template-areas: "true false";
         justify-items: stretch;
         align-items: stretch;
@@ -78,6 +79,9 @@
         & > .if-false,
         > .if-true {
             height: 100%;
+            max-width: $statement_max_width;
+            min-width: 1.655em;
+            width: calc(100% + $border_width);
             display: flex;
             flex-direction: column;
             flex-wrap: nowrap;
