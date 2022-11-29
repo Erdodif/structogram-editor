@@ -7,7 +7,7 @@
     padding-block-start: 0.475em;
     padding-block-end: 0.275em;
     &:empty {
-        background: rgba(0, 0, 0, 0);
+        background: rgba(0, 0, 0, .01);
         z-index: 2;
         &::before {
             background: $color_statement_bg;
@@ -17,6 +17,7 @@
             height: 100%;
             user-select: none;
             content: "-";
+            margin-block: auto;
             color: $color_statement_text;
             line-height: 100%;
         }
@@ -24,7 +25,6 @@
     &:focus {
         outline-style: none;
         margin: -$border_width;
-        font-size: 1em;
         z-index: 5;
         background: $color_editable_bg;
         color: $color_editable_text;

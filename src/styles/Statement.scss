@@ -43,6 +43,8 @@
         //background: $color_statement_bg_highlight;
     }
     & > .content {
+        padding-inline: .5ch;
+        margin-inline: -.5ch;
         & > .editable {
             grid-area: head;
         }

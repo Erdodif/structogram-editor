@@ -1,7 +1,7 @@
 @import "../variables";
 @import "../mixins";
 
-@mixin if_indicator_border{
+@mixin if_indicator_border {
     background: $color_statement_border;
     bottom: -$border_width;
     max-height: 4.795em;
@@ -25,7 +25,7 @@
     &::after {
         @include render_pseudo(" ");
         @include if_indicator_border();
-        right: 1.65ch;
+        right: calc(1.65ch - $border_width);
         transform: skewX(-25deg);
     }
 }
@@ -34,6 +34,7 @@
     & > .indicator-holder {
         background-color: transparent;
         position: absolute;
+        margin-inline: -$border_width;
         inset: calc($border_width / -2) calc($border_width / -4) calc($border_width / -2) calc($border_width / -4);
         &::before {
             @include render_pseudo($content);
@@ -46,7 +47,7 @@
     &::before {
         @include render_pseudo(" ");
         @include if_indicator_border();
-        left: 1.65ch;
+        left: calc(1.65ch - $border_width);
         transform: skewX(25deg);
     }
 }
@@ -59,6 +60,7 @@
     grid-template-rows: auto auto;
     grid-template-areas: "head" "body";
     & > .content {
+        margin-inline: $border_width;
         border-block-end: $border;
         margin-block-end: 0;
         padding-inline: 3.2ch;
@@ -98,6 +100,9 @@
 
         & > .if-true {
             grid-area: true;
+            & > .statement > .content > .editable:focus {
+                width: calc(100% - $border_width);
+            }
         }
         & > .if-false {
             margin-inline-end: calc($border_width * -1);
