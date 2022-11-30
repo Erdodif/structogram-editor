@@ -24,14 +24,14 @@
             transform: rotateZ(360deg);
         }
         60% {
-            opacity: 0.7;
+            opacity: 0.5;
             transform: rotateZ(0deg);
         }
         70% {
             transform: rotateZ(360deg);
         }
         80% {
-            opacity: 0.5;
+            opacity: 0.2;
             transform: rotateZ(0deg);
         }
         90% {
@@ -44,5 +44,5 @@
     }
     width: calc(100% + $border_width * 2);
     margin-inline-end: calc($border_width * -2);
-    animation: spining 1s linear infinite;
+    animation: spining .8s linear;
 }
