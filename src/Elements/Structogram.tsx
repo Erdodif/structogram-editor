@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createRef, useRef, RefObject, useState } from "react";
 import { StructogramController } from "structogram";
 import { Statement} from "structogram/dist/src/Statement";
 import "../styles/Structogram.scss";
@@ -13,11 +13,12 @@ export function Structogram(props: any): JSX.Element {
     const [locked, setLocked] = useState(props?.locked ?? false);
     const [scope, setScope] = useState<Number[]>([]);
     const [controller] = useState<StructogramController>(props?.controller ?? new StructogramController());
+    const ref = useRef<StructogramController>(controller);
     const getStatements = () => {
         let list: JSX.Element[] = [];
         let statements: Statement[] = controller.structogram.statements;
         for (const index in statements) {
-            list.push(statementToJSX(statements[index], [Number(index)], controller));
+            list.push(statementToJSX(statements[index], [Number(index)], ref));
         }
         return list;
     }
