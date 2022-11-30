@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useState, useRef, createElement } from "react"
 import { StructogramController } from "structogram";
 import "../styles/Statement.scss";
+import "../styles/animations/StatementDestroy.scss";
 import { useContentEditable } from "./Editable";
+import { RefObject } from "react";
 
 export function mappingToId(mapping: number[]): string {
     let id: string = "S".concat(String(mapping[0]));
@@ -32,27 +34,59 @@ function ActionButton(props: { name: string, action: () => void }) {
     </div>
 }//TODO
 
-export function Statement(props: { content: string | null, mapping: number[], controller:StructogramController}) {
+export function Statement(props: {
+    content: string | null,
+    mapping: number[],
+    controller: RefObject<StructogramController>,
+    updateControllerState: () => void
+}) {
+    const ref: React.ClassAttributes<HTMLDivElement> | React.LegacyRef<HTMLDivElement> = useRef(null);
     const [content, setContent] = useState(props?.content ?? "");
+
+    const animateDestruction: () => void = () => {
+        let height = ref.current!.clientHeight;
+        let div = document.createElement("div");
+        div.id = ref.current!.id + "-replace";
+        div.className = "statement statement-destroy";
+        div.style.height = `${height}px`;
+        div.style.border = ref.current?.style.border!;
+        document.getElementById(ref.current?.id!)!.style.display = "none";
+        ref.current?.replaceWith(ref.current, div);
+        setTimeout(() => {
+            div.remove();
+            props.controller.current!.setElementByMapping(props.mapping, null);
+            props.updateControllerState();
+        }, 1000);
+    };
 
     let id = mappingToId(props.mapping);
 
-    return <div className="statement normal" id={id}>
+    const deleteSelf: () => void = () => {
+        animateDestruction();
+    }
+
+    return <div className="statement normal" id={id} ref={ref}>
         <div className="content">
             {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="buttons">
-            {useStatementButtons(() => { props.controller.setElementByMapping(props.mapping,null) }, () => { })}
+            {useStatementButtons(deleteSelf, () => { })}
         </div>
     </div>;
 }
 
-export function IfStatement(props: { content: string | null, mapping: number[], statementBlocks: JSX.Element[][], controller:StructogramController}) {
+export function IfStatement(props: {
+    content: string | null,
+    mapping: number[],
+    statementBlocks: JSX.Element[][],
+    controller: RefObject<StructogramController>,
+    updateControllerState: () => void
+}) {
     const [content, setContent] = useState(props?.content ?? "");
     let id = mappingToId(props.mapping);
     return <div className="statement if" id={id}>
         <div className="content">
-            <div className="indicator-holder"/>
+            <div className="indicator-holder" />
             {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="statement-blocks">
@@ -66,7 +100,16 @@ export function IfStatement(props: { content: string | null, mapping: number[], 
     </div>;
 }
 
-export function SwitchStatement(props: { content: string | null, mapping: number[], blocks: { case: string, statements: JSX.Element[] }[], controller:StructogramController }) {
+export function SwitchStatement(props: {
+    content: string | null,
+    mapping: number[],
+    blocks: {
+        case: string,
+        statements: JSX.Element[]
+    }[],
+    controller: RefObject<StructogramController>,
+    updateControllerState: () => void
+}) {
     const [content, setContent] = useState(props?.content ?? "");
     let blocks = [];
     for (let i = 0; i < props.blocks.length; i++) {
@@ -89,7 +132,13 @@ export function SwitchStatement(props: { content: string | null, mapping: number
     </div>;
 }
 
-export function LoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] , controller:StructogramController}) {
+export function LoopStatement(props: {
+    content: string | null,
+    mapping: number[],
+    statements: JSX.Element[],
+    controller: RefObject<StructogramController>,
+    updateControllerState: () => void
+}) {
     const [content, setContent] = useState(props?.content ?? "");
     let id = mappingToId(props.mapping)
     return <div className="statement loop" id={id}>
@@ -105,7 +154,13 @@ export function LoopStatement(props: { content: string | null, mapping: number[]
     </div>;
 }
 
-export function ReversedLoopStatement(props: { content: string | null, mapping: number[], statements: JSX.Element[] , controller:StructogramController}) {
+export function ReversedLoopStatement(props: {
+    content: string | null,
+    mapping: number[],
+    statements: JSX.Element[],
+    controller: RefObject<StructogramController>,
+    updateControllerState: () => void
+}) {
     const [content, setContent] = useState(props?.content ?? "");
     let id = mappingToId(props.mapping)
     return <div className="statement loop-reverse" id={id}>

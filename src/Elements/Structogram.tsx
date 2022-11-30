@@ -1,27 +1,36 @@
 import { createRef, useRef, RefObject, useState } from "react";
 import { StructogramController } from "structogram";
-import { Statement} from "structogram/dist/src/Statement";
+import { Statement } from "structogram/dist/src/Statement";
 import "../styles/Structogram.scss";
 import "../styles/Statement.scss";
 import { statementToJSX } from "./StatementBuilder";
 
-function useController(){
+function useController() {
 
+}
+
+function getStatements(controller: StructogramController, ref: React.MutableRefObject<StructogramController>, updateController: () => void) {
+    let list: JSX.Element[] = [];
+    let statements: Statement[] = controller.structogram.statements;
+    for (const index in statements) {
+        list.push(statementToJSX(statements[index], [Number(index)], ref, updateController));
+    }
+    return list;
 }
 
 export function Structogram(props: any): JSX.Element {
     const [locked, setLocked] = useState(props?.locked ?? false);
     const [scope, setScope] = useState<Number[]>([]);
-    const [controller] = useState<StructogramController>(props?.controller ?? new StructogramController());
+    const [controller, setController] = useState<StructogramController>(props?.controller ?? new StructogramController());
     const ref = useRef<StructogramController>(controller);
-    const getStatements = () => {
-        let list: JSX.Element[] = [];
-        let statements: Statement[] = controller.structogram.statements;
-        for (const index in statements) {
-            list.push(statementToJSX(statements[index], [Number(index)], ref));
-        }
-        return list;
+
+    const updateControlledState: (() => void) = () => {
+        console.log("update happened!");
+        setController(ref.current);
+        setStatements(getStatements(controller, ref, updateControlledState));
     }
+    
+    const [statements, setStatements] = useState( getStatements(controller, ref, updateControlledState))
 
     const getId: () => string = () => {
         let name = controller.structogram.name?.replaceAll(" ", "_").replaceAll("-", "_");
@@ -54,7 +63,7 @@ export function Structogram(props: any): JSX.Element {
             <div className="content">
                 {controller.structogram?.renderStart ? <div className="statement statement-start" id={`start_${getId()}`}>START</div> : null}
                 <div className="structogram-scope">
-                    {getStatements()}
+                    {statements}
                 </div>
                 {controller.structogram?.renderStart ? <div className="statement statement-end" id={`end_${getId()}`}>END</div> : null}
             </div>
