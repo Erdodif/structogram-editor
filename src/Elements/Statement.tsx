@@ -4,6 +4,7 @@ import "../styles/Statement.scss";
 import "../styles/animations/StatementDestroy.scss";
 import { useContentEditable } from "./Editable";
 import { RefObject } from "react";
+import { animateDestruction } from "./StatementDestructor";
 
 export function mappingToId(mapping: number[]): string {
     let id: string = "S".concat(String(mapping[0]));
@@ -40,29 +41,13 @@ export function Statement(props: {
     controller: RefObject<StructogramController>,
     updateControllerState: () => void
 }) {
-    const ref: React.ClassAttributes<HTMLDivElement> | React.LegacyRef<HTMLDivElement> = useRef(null);
     const [content, setContent] = useState(props?.content ?? "");
-
-    const animateDestruction: () => void = () => {
-        let height = ref.current!.clientHeight;
-        let div = document.createElement("div");
-        div.id = ref.current!.id + "-replace";
-        div.className = "statement statement-destroy";
-        div.style.height = `${height}px`;
-        div.style.border = ref.current?.style.border!;
-        document.getElementById(ref.current?.id!)!.style.display = "none";
-        ref.current?.replaceWith(ref.current, div);
-        setTimeout(() => {
-            div.remove();
-            props.controller.current!.setElementByMapping(props.mapping, null);
-            props.updateControllerState();
-        }, 1000);
-    };
+    const ref: RefObject<HTMLDivElement> = useRef(null);
 
     let id = mappingToId(props.mapping);
 
     const deleteSelf: () => void = () => {
-        animateDestruction();
+        animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
     }
 
     return <div className="statement normal" id={id} ref={ref}>
@@ -83,8 +68,15 @@ export function IfStatement(props: {
     updateControllerState: () => void
 }) {
     const [content, setContent] = useState(props?.content ?? "");
+    const ref: RefObject<HTMLDivElement> = useRef(null);
+
     let id = mappingToId(props.mapping);
-    return <div className="statement if" id={id}>
+
+    const deleteSelf: () => void = () => {
+        animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
+    }
+
+    return <div className="statement if" id={id} ref={ref}>
         <div className="content">
             <div className="indicator-holder" />
             {useContentEditable(content, setContent, id + "_content")}
@@ -96,6 +88,9 @@ export function IfStatement(props: {
             <div className="if-false">
                 {props?.statementBlocks[1]}
             </div>
+        </div>
+        <div className="buttons">
+            {useStatementButtons(deleteSelf, () => { })}
         </div>
     </div>;
 }
@@ -110,11 +105,18 @@ export function SwitchStatement(props: {
     controller: RefObject<StructogramController>,
     updateControllerState: () => void
 }) {
-    const [content, setContent] = useState(props?.content ?? "");
+    const ref: RefObject<HTMLDivElement> = useRef(null);
+
+    let id = mappingToId(props.mapping);
+
+    const deleteSelf: () => void = () => {
+        animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
+    }
+
     let blocks = [];
     for (let i = 0; i < props.blocks.length; i++) {
         blocks.push(
-            <div className="case" key={`${props.mapping}\\${i}`}>
+            <div className="case" key={`${id}\\${i}`}>
                 <div className={props.blocks[i].case.trim() === "else" ? "switch-else" : "switch-case"}>
                     {props.blocks[i].case}
                 </div>
@@ -125,9 +127,12 @@ export function SwitchStatement(props: {
         );
     }
 
-    return <div className="statement switch" id={mappingToId(props.mapping)}>
+    return <div className="statement switch" id={id} ref={ref}>
         <div className="case-blocks">
             {blocks}
+        </div>
+        <div className="buttons">
+            {useStatementButtons(deleteSelf, () => { })}
         </div>
     </div>;
 }
@@ -140,8 +145,15 @@ export function LoopStatement(props: {
     updateControllerState: () => void
 }) {
     const [content, setContent] = useState(props?.content ?? "");
-    let id = mappingToId(props.mapping)
-    return <div className="statement loop" id={id}>
+    const ref: RefObject<HTMLDivElement> = useRef(null);
+
+    let id = mappingToId(props.mapping);
+
+    const deleteSelf: () => void = () => {
+        animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
+    }
+
+    return <div className="statement loop" id={id} ref={ref}>
         <div className="content">
             {useContentEditable(content, setContent, id + "_content")}
         </div>
@@ -149,7 +161,7 @@ export function LoopStatement(props: {
             {props?.statements}
         </div>
         <div className="buttons">
-            {useStatementButtons(() => { }, () => { })}
+            {useStatementButtons(deleteSelf, () => { })}
         </div>
     </div>;
 }
@@ -162,13 +174,23 @@ export function ReversedLoopStatement(props: {
     updateControllerState: () => void
 }) {
     const [content, setContent] = useState(props?.content ?? "");
-    let id = mappingToId(props.mapping)
-    return <div className="statement loop-reverse" id={id}>
+    const ref: RefObject<HTMLDivElement> = useRef(null);
+
+    let id = mappingToId(props.mapping);
+
+    const deleteSelf: () => void = () => {
+        animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
+    }
+
+    return <div className="statement loop-reverse" id={id} ref={ref}>
         <div className="content">
             {useContentEditable(content, setContent, id + "_content")}
         </div>
         <div className="statements">
             {props?.statements}
+        </div>
+        <div className="buttons">
+            {useStatementButtons(deleteSelf, () => { })}
         </div>
     </div>;
 }

@@ -1,48 +1,47 @@
 @import "../variables";
 
 .statement-destroy {
+    margin-inline-end: auto;
+    width: 100%;
     @keyframes spining {
         0% {
-            transform: rotateZ(0deg);
-        }
-        10% {
-            transform: rotateZ(360deg);
+            width: 100%;
         }
         20% {
-            transform: rotateZ(0deg);
+            width: 70%;
         }
         30% {
             opacity: 1;
-            transform: rotateZ(360deg);
+            width: 50%;
         }
         40% {
             opacity: 0.9;
-            transform: rotateZ(0deg);
+            width: 30%;
         }
         50% {
             opacity: 0.8;
-            transform: rotateZ(360deg);
+            width: 25%;
         }
         60% {
             opacity: 0.5;
-            transform: rotateZ(0deg);
+            width: 20%;
         }
         70% {
-            transform: rotateZ(360deg);
+            width: 15%;
         }
         80% {
             opacity: 0.2;
-            transform: rotateZ(0deg);
+            width: 10%;
         }
         90% {
-            transform: rotateZ(360deg);
+            width: 5%;
         }
         100% {
             opacity: 0;
-            transform: rotateZ(360deg);
+            width: 0%;
         }
     }
     width: calc(100% + $border_width * 2);
     margin-inline-end: calc($border_width * -2);
-    animation: spining .8s linear;
+    animation: spining 0.3s linear;
 }
