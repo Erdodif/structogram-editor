@@ -1,5 +1,6 @@
 import { useState, useRef, createElement } from "react"
 import { StructogramController } from "structogram";
+import {Statement as SStatement} from "structogram/dist/src/Statement"
 import "../styles/Statement.scss";
 import "../styles/animations/StatementDestroy.scss";
 import { useContentEditable } from "./Editable";
@@ -50,9 +51,14 @@ export function Statement(props: {
         animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
     }
 
+    const updateContent: (content:string)=>void = () =>{
+        (props.controller.current?.getElementByMapping(props.mapping) as SStatement).content = content;
+        props.updateControllerState();
+    }
+
     return <div className="statement normal" id={id} ref={ref}>
         <div className="content">
-            {useContentEditable(content, setContent, id + "_content")}
+            {useContentEditable(content, setContent, id + "_content", updateContent)}
         </div>
         <div className="buttons">
             {useStatementButtons(deleteSelf, () => { })}
