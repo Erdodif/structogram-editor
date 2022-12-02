@@ -1,6 +1,7 @@
 @import "variables";
 
 .structogram {
+    background: $color_page_bg;
     margin-block-start: 1.225em;
     margin-block-end: 1em;
     margin-inline: auto;
@@ -34,11 +35,17 @@
             border-left: $border_width solid $color_statement_border;
         }
     }
-    .statement-start,
-    .statement-end {
+    > .statement-start,
+    > .statement-end {
         user-select: none;
     }
-    .json-view {
-        display: none;
+    > .json-view {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        word-wrap: break-word;
+        z-index: -1;
+        opacity: 0.4;
     }
 }
