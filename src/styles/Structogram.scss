@@ -7,7 +7,7 @@
     width: fit-content;
     font-family: $font_structogram;
     color: white;
-    resize:horizontal;
+    resize: horizontal;
     > .content {
         border-inline: $border;
         border-block-start: $border;
@@ -22,11 +22,11 @@
         border: $border;
         border-radius: 1em;
         padding-inline: 1em;
-        padding-block:.125em;
+        padding-block: 0.125em;
         margin-block-end: 0.825em;
         width: max-content;
-        &::before{
-            top:1.415em;
+        &::before {
+            top: 1.415em;
             left: 50%;
             position: absolute;
             content: " ";
@@ -37,5 +37,8 @@
     .statement-start,
     .statement-end {
         user-select: none;
+    }
+    .json-view {
+        display: none;
     }
 }
