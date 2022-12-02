@@ -1,4 +1,4 @@
-import { useState, useRef, createElement } from "react"
+import { useState, useRef} from "react"
 import { StructogramController } from "structogram";
 import {Statement as SStatement} from "structogram/dist/src/Statement"
 import "../styles/Statement.scss";
