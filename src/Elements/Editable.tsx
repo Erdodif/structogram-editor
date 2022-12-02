@@ -7,15 +7,15 @@ export function useContentEditable(
     content: string,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     id: string,
-    update: ((s: string)=>void) | null = null
+    update: ((s: string) => void) | null = null
 ): JSX.Element {
     const emitChange = (event: any) => {
         setContent(event.target.value);
+        if (update) update(event.target.value);
     }
 
     const evalChange = () => {
-        let value = content;
-        if(update) update(content);
+        if (update) update(content);
     }
 
     return (
