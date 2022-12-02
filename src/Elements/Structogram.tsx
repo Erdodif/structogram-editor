@@ -67,6 +67,9 @@ export function Structogram(props: any): JSX.Element {
                 </div>
                 {controller.structogram?.renderStart ? <div className="statement statement-end" id={`end_${getId()}`}>END</div> : null}
             </div>
+            <span id={`${getId()}_json`} className="json-view">
+                {JSON.stringify(controller.structogram,null,4)}
+            </span>
         </div>
     );
 }
