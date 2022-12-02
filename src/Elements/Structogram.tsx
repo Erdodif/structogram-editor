@@ -1,9 +1,10 @@
-import { createRef, useRef, RefObject, useState } from "react";
+import { createRef, useRef, RefObject, useState, createElement } from "react";
 import { StructogramController } from "structogram";
 import { Statement } from "structogram/dist/src/Statement";
 import "../styles/Structogram.scss";
 import "../styles/Statement.scss";
 import { statementToJSX } from "./StatementBuilder";
+import {makeImage, Preview} from "./StructogramToImage";
 
 function useController() {
 
@@ -29,8 +30,8 @@ export function Structogram(props: any): JSX.Element {
         setController(ref.current);
         setStatements(getStatements(controller, ref, updateControlledState));
     }
-    
-    const [statements, setStatements] = useState( getStatements(controller, ref, updateControlledState))
+
+    const [statements, setStatements] = useState(getStatements(controller, ref, updateControlledState))
 
     const getId: () => string = () => {
         let name = controller.structogram.name?.replaceAll(" ", "_").replaceAll("-", "_");
@@ -57,8 +58,13 @@ export function Structogram(props: any): JSX.Element {
         });
     }
 
+    const shoot: () => void = ()=>{
+        makeImage(getId());
+    }
+
     return (
         <div className={classList} id={getId()}>
+            <Preview id={getId()}/>
             {hasSignature ? <div className="structogram-signature" id={`signature_${getId()}`}>{controller.structogram.name}</div> : null}
             <div className="content">
                 {controller.structogram?.renderStart ? <div className="statement statement-start" id={`start_${getId()}`}>START</div> : null}
@@ -68,7 +74,7 @@ export function Structogram(props: any): JSX.Element {
                 {controller.structogram?.renderStart ? <div className="statement statement-end" id={`end_${getId()}`}>END</div> : null}
             </div>
             <span id={`${getId()}_json`} className="json-view">
-                {JSON.stringify(controller.structogram,null,4)}
+                {JSON.stringify(controller.structogram, null, "<br>").replaceAll('\\', "")}
             </span>
         </div>
     );

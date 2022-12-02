@@ -1,11 +1,10 @@
-import { useState, useRef} from "react"
+import { useState, useRef, RefObject } from "react"
 import { StructogramController } from "structogram";
 import {Statement as SStatement} from "structogram/dist/src/Statement"
+import { animateDestruction } from "./StatementDestructor";
+import { useContentEditable } from "./Editable";
 import "../styles/Statement.scss";
 import "../styles/animations/StatementDestroy.scss";
-import { useContentEditable } from "./Editable";
-import { RefObject } from "react";
-import { animateDestruction } from "./StatementDestructor";
 
 export function mappingToId(mapping: number[]): string {
     let id: string = "S".concat(String(mapping[0]));
