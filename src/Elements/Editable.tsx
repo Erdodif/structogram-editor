@@ -1,31 +1,31 @@
-import { RefObject } from "react";
+import { RefObject, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { StructogramController } from "structogram";
 import "../styles/ContentEditable.scss";
 
-export function useContentEditable(
-    content: string,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
-    id: string,
-    update: ((s: string) => void) | null = null
-): JSX.Element {
-    const emitChange = (event: any) => {
-        setContent(event.target.value);
-        if (update) update(event.target.value);
+export function Editable(
+    props: {
+        content: string,
+        id: string,
+        handleChange: ((s: string) => void)
     }
+): JSX.Element {
 
-    const evalChange = () => {
-        if (update) update(content);
+    const emitChange = (event: any) => {
+        //setSelfContent(event.target.value);
+        // props.setContent(event.target.value);
+        console.log("emitChange happened");
+        console.log(props.content);
+        console.log(event.target.value);
+        props.handleChange(event.target.value);
     }
 
     return (
         <ContentEditable
             spellCheck={false}
-            html={content}
+            html={props.content}
             className={"editable"}
-            id={id}
-            onSubmit={emitChange}
-            onChange={emitChange}
-            onBlur={evalChange} />
+            id={props.id}
+            onChange={emitChange}/>
     );
 }

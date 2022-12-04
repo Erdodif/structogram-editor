@@ -1,8 +1,8 @@
 import { useState, useRef, RefObject } from "react"
 import { StructogramController } from "structogram";
-import {Statement as SStatement} from "structogram/dist/src/Statement"
+import { Statement as SStatement } from "structogram/dist/src/Statement"
 import { animateDestruction } from "./StatementDestructor";
-import { useContentEditable } from "./Editable";
+import { Editable } from "./Editable";
 import "../styles/Statement.scss";
 import "../styles/animations/StatementDestroy.scss";
 
@@ -50,14 +50,19 @@ export function Statement(props: {
         animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
     }
 
-    const updateContent: (content:string)=>void = () =>{
-        (props.controller.current?.getElementByMapping(props.mapping) as SStatement).content = content;
+    const handleChange = (newContent: string) => {
+        setContent(newContent);
+        console.log("update happened");
+        console.log(newContent);
+        let tmp = props.controller.current!.getElementByMapping(props.mapping) as SStatement;
+        tmp.content = newContent;
+        props.controller.current!.setElementByMapping(props.mapping,tmp);
         props.updateControllerState();
     }
 
     return <div className="statement normal" id={id} ref={ref}>
         <div className="content">
-            {useContentEditable(content, setContent, id + "_content", updateContent)}
+            <Editable content={content} id={`${id}_content`} handleChange={handleChange} />
         </div>
         <div className="buttons">
             {useStatementButtons(deleteSelf, () => { })}
@@ -84,7 +89,7 @@ export function IfStatement(props: {
     return <div className="statement if" id={id} ref={ref}>
         <div className="content">
             <div className="indicator-holder" />
-            {useContentEditable(content, setContent, id + "_content")}
+            <Editable content={content} id={`${id}_content`} handleChange={() => { }} />
         </div>
         <div className="statement-blocks">
             <div className="if-true">
@@ -160,7 +165,7 @@ export function LoopStatement(props: {
 
     return <div className="statement loop" id={id} ref={ref}>
         <div className="content">
-            {useContentEditable(content, setContent, id + "_content")}
+            <Editable content={content} id={`${id}_content`} handleChange={() => { }} />
         </div>
         <div className="statements">
             {props?.statements}
@@ -189,7 +194,7 @@ export function ReversedLoopStatement(props: {
 
     return <div className="statement loop-reverse" id={id} ref={ref}>
         <div className="content">
-            {useContentEditable(content, setContent, id + "_content")}
+            <Editable content={content} id={`${id}_content`} handleChange={() => { }} />
         </div>
         <div className="statements">
             {props?.statements}

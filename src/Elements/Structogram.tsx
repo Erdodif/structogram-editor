@@ -26,12 +26,14 @@ export function Structogram(props: any): JSX.Element {
     const ref = useRef<StructogramController>(controller);
 
     const updateControlledState: (() => void) = () => {
-        console.log("update happened!");
+        console.log("controlupdate happened");
+        console.log(controller);
+        console.log(ref.current);
         setController(ref.current);
-        setStatements(getStatements(controller, ref, updateControlledState));
+        setStatements(getStatements(ref.current, ref, updateControlledState));
     }
 
-    const [statements, setStatements] = useState(getStatements(controller, ref, updateControlledState))
+    const [statements, setStatements] = useState(getStatements(controller, ref, updateControlledState));
 
     const getId: () => string = () => {
         let name = controller.structogram.name?.replaceAll(" ", "_").replaceAll("-", "_");
@@ -74,7 +76,7 @@ export function Structogram(props: any): JSX.Element {
                 {controller.structogram?.renderStart ? <div className="statement statement-end" id={`end_${getId()}`}>END</div> : null}
             </div>
             <span id={`${getId()}_json`} className="json-view">
-                {JSON.stringify(controller.structogram, null, "<br>").replaceAll('\\', "")}
+                {JSON.stringify(controller.structogram, null, "<br/>").replaceAll('\\', "")}
             </span>
         </div>
     );
