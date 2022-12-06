@@ -1,6 +1,6 @@
 import { useState, useRef, RefObject } from "react"
 import { StructogramController } from "structogram";
-import { Statement as SStatement } from "structogram/dist/src/Statement"
+import { Statement as SStatement, SwitchStatement as SSwitchStatement } from "structogram/dist/src/Statement"
 import { animateDestruction } from "./StatementDestructor";
 import { Editable } from "./Editable";
 import "../styles/Statement.scss";
@@ -95,7 +95,6 @@ export function IfStatement(props: {
     }
 
 
-    //<Editable content={content} id={`${id}_content`} handleChange={() => { }} />
     return <div className="statement if" id={id} ref={ref}>
         <div className="content">
             <div className="indicator-holder" />
@@ -126,19 +125,28 @@ export function SwitchStatement(props: {
     updateControllerState: () => void
 }) {
     const ref: RefObject<HTMLDivElement> = useRef(null);
-
+    const [cases, setCases] = useState<string[]>(props.blocks.map(block => block.case));
     let id = mappingToId(props.mapping);
 
     const deleteSelf: () => void = () => {
         animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
     }
 
+    const handleCaseChange = (newContent: string, index: number) => {
+        cases[index] = newContent
+        setCases(cases);
+        let tmp = props.controller.current!.getElementByMapping(props.mapping) as SSwitchStatement;
+        tmp.blocks[index].case = newContent;
+        props.controller.current!.setElementByMapping(props.mapping, tmp);
+        props.updateControllerState();
+    }
+
     let blocks = [];
     for (let i = 0; i < props.blocks.length; i++) {
         blocks.push(
             <div className="case" key={`${id}\\${i}`}>
-                <div className={props.blocks[i].case.trim() === "else" ? "switch-else" : "switch-case"}>
-                    {props.blocks[i].case}
+                <div className={props.blocks[i].case.trim() === "else" ? "switch-else" : "switch-case"} >
+                    <Editable content={props.blocks[i].case} id={id} handleChange={(s) => handleCaseChange(s, i)} />
                 </div>
                 <div className="switch-statements">
                     {props.blocks[i].statements}
