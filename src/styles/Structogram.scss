@@ -1,6 +1,7 @@
 @import "variables";
 
 .structogram {
+    position: relative;
     background: $color_page_bg;
     margin-block-start: 1.225em;
     margin-block-end: 1em;
