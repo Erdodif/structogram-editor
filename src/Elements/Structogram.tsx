@@ -26,9 +26,6 @@ export function Structogram(props: any): JSX.Element {
     const ref = useRef<StructogramController>(controller);
 
     const updateControlledState: (() => void) = () => {
-        console.log("controlupdate happened");
-        console.log(controller);
-        console.log(ref.current);
         setController(ref.current);
         setStatements(getStatements(ref.current, ref, updateControlledState));
     }
