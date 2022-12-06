@@ -35,6 +35,24 @@ function ActionButton(props: { name: string, action: () => void }) {
     </div>
 }//TODO
 
+function useContentEditable(
+    id: string,
+    content: string,
+    setContent: (s: string) => void,
+    mapping: number[],
+    controllerRef: RefObject<StructogramController>,
+    updateController: () => void
+): JSX.Element {
+    const handleChange = (newContent: string) => {
+        setContent(newContent);
+        let tmp = controllerRef.current!.getElementByMapping(mapping) as SStatement;
+        tmp.content = newContent;
+        controllerRef.current!.setElementByMapping(mapping, tmp);
+        updateController();
+    }
+    return <Editable content={content} id={id} handleChange={handleChange} />
+}
+
 export function Statement(props: {
     content: string | null,
     mapping: number[],
@@ -50,19 +68,9 @@ export function Statement(props: {
         animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
     }
 
-    const handleChange = (newContent: string) => {
-        setContent(newContent);
-        console.log("update happened");
-        console.log(newContent);
-        let tmp = props.controller.current!.getElementByMapping(props.mapping) as SStatement;
-        tmp.content = newContent;
-        props.controller.current!.setElementByMapping(props.mapping,tmp);
-        props.updateControllerState();
-    }
-
     return <div className="statement normal" id={id} ref={ref}>
         <div className="content">
-            <Editable content={content} id={`${id}_content`} handleChange={handleChange} />
+            {useContentEditable(`${id}_content`, content, setContent, props.mapping, props.controller, props.updateControllerState)}
         </div>
         <div className="buttons">
             {useStatementButtons(deleteSelf, () => { })}
@@ -86,10 +94,12 @@ export function IfStatement(props: {
         animateDestruction(ref, props.mapping, props.controller, props.updateControllerState);
     }
 
+
+    //<Editable content={content} id={`${id}_content`} handleChange={() => { }} />
     return <div className="statement if" id={id} ref={ref}>
         <div className="content">
             <div className="indicator-holder" />
-            <Editable content={content} id={`${id}_content`} handleChange={() => { }} />
+            {useContentEditable(`${id}_content`, content, setContent, props.mapping, props.controller, props.updateControllerState)}
         </div>
         <div className="statement-blocks">
             <div className="if-true">
@@ -165,7 +175,7 @@ export function LoopStatement(props: {
 
     return <div className="statement loop" id={id} ref={ref}>
         <div className="content">
-            <Editable content={content} id={`${id}_content`} handleChange={() => { }} />
+            {useContentEditable(`${id}_content`, content, setContent, props.mapping, props.controller, props.updateControllerState)}
         </div>
         <div className="statements">
             {props?.statements}
@@ -194,7 +204,7 @@ export function ReversedLoopStatement(props: {
 
     return <div className="statement loop-reverse" id={id} ref={ref}>
         <div className="content">
-            <Editable content={content} id={`${id}_content`} handleChange={() => { }} />
+            {useContentEditable(`${id}_content`, content, setContent, props.mapping, props.controller, props.updateControllerState)}
         </div>
         <div className="statements">
             {props?.statements}
