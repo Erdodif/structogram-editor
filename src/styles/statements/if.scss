@@ -58,6 +58,7 @@
 @mixin switch_indicator_true {
     @include if_indicator_true(" ");
     &::before {
+        height: unset;
         max-height: 2.725em !important;
         margin-inline-start: calc(1.65ch / -2 + $border_width);
     }
@@ -67,6 +68,9 @@
     @include if_indicator_false("H");
     & > .indicator-holder::after {
         color: $color_statement_text;
+    }
+    &::after{
+        height: unset;
     }
 }
 
