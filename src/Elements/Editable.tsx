@@ -14,6 +14,6 @@ export function Editable(
             html={props.content}
             className={"editable"}
             id={props.id}
-            onChange={(event)=>props.handleChange(event.target.value)}/>
+            onChange={(event) => props.handleChange(event.target.value)} />
     );
 }
