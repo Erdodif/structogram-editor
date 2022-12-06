@@ -146,6 +146,7 @@ export function SwitchStatement(props: {
         blocks.push(
             <div className="case" key={`${id}\\${i}`}>
                 <div className={props.blocks[i].case.trim() === "else" ? "switch-else" : "switch-case"} >
+                    <div className="indicator-holder" />
                     <Editable content={props.blocks[i].case} id={id} handleChange={(s) => handleCaseChange(s, i)} />
                 </div>
                 <div className="switch-statements">

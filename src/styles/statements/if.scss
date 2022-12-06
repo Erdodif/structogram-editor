@@ -4,6 +4,7 @@
 @mixin if_indicator_border {
     background: $color_statement_border;
     bottom: -$border_width;
+    top: -$border_width;
     max-height: 4.795em;
     height: calc(100% + $border_width);
     width: $border_width;
@@ -27,6 +28,7 @@
         @include if_indicator_border();
         right: calc(1.65ch - $border_width);
         transform: skewX(-25deg);
+        margin-top: auto;
     }
 }
 
@@ -49,6 +51,22 @@
         @include if_indicator_border();
         left: calc(1.65ch - $border_width);
         transform: skewX(25deg);
+        margin-top: auto;
+    }
+}
+
+@mixin switch_indicator_true {
+    @include if_indicator_true(" ");
+    &::before {
+        max-height: 2.725em !important;
+        margin-inline-start: calc(1.65ch / -2 + $border_width);
+    }
+}
+
+@mixin switch_indicator_false {
+    @include if_indicator_false("H");
+    & > .indicator-holder::after {
+        color: $color_statement_text;
     }
 }
 
@@ -141,21 +159,26 @@
             align-self: stretch;
             & > .switch-else,
             & > .switch-case {
+                padding-inline: 1.65ch;
+                position: relative;
                 margin-block-start: -$border_width;
                 margin-inline-start: -$border_width;
                 border: $border;
                 grid-area: case;
             }
-            /* & > .switch-case::before {
-                    @include if_indicator_true;
-                }*/
+            & > .switch-case {
+                @include switch_indicator_true();
+                & > .editable {
+                    margin-inline-start: -$border_width;
+                }
+            }
             & > .switch-else {
+                @include switch_indicator_false();
                 color: transparent;
                 user-select: none;
-                /* &::before {
-                        color: $color_statement_text;
-                        @include if_indicator_false("H");
-                    }*/
+                & > .editable {
+                    margin-inline-end: calc($border_width * 3);
+                }
             }
             & > .switch-statements {
                 grid-area: statements;
