@@ -147,9 +147,6 @@
         flex-wrap: nowrap;
         justify-content: stretch;
         & > .case {
-            &:hover {
-                background: $color_statement_bg_highlight;
-            }
             margin-block-end: -$border_width;
             &:last-child {
                 margin-inline-end: -$border_width;
